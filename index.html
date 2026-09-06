@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>अनलाइन रिजल्ट तथा मार्कसिट प्रणाली (Class 1 - 12)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font - Mukta -->
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Mukta', sans-serif;
+            background-color: #f3f4f6;
+        }
+
+        /* Standard Print CSS for 1 Page A4 Fit */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 8mm;
+            }
+            body {
+                background-color: white !important;
+                color: black !important;
+                font-size: 11pt;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .print-only {
+                display: block !important;
+            }
+            main {
+                max-width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .print-container {
+                box-shadow: none !important;
+                border: 2px solid #1e1b4b !important;
+                padding: 12px !important;
+                margin: 0 auto !important;
+                width: 100% !important;
+                max-height: 280mm !important;
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+            .print-compact-table th, 
+            .print-compact-table td {
+                padding: 3px 6px !important;
+                font-size: 10pt !important;
+            }
+            .print-compact-text {
+                font-size: 9pt !important;
+            }
+            .print-header-padding {
+                padding-bottom: 8px !important;
+                margin-bottom: 12px !important;
+            }
+            .print-mb {
+                margin-bottom: 10px !important;
+            }
+            .print-pt {
+                padding-top: 16px !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-100 min-h-screen text-slate-800">
+
+    <!-- Header / Navbar -->
+    <header class="bg-indigo-900 text-white shadow-lg no-print">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <!-- Dynamic Header School Logo -->
+                <div id="header-logo-box" class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center overflow-hidden border border-indigo-400">
+                    <i class="fa-solid fa-graduation-cap text-2xl text-yellow-400"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold leading-tight" id="header-school-name">श्री ज्ञानोदय माध्यमिक विद्यालय</h1>
+                    <p class="text-xs text-indigo-200">अनलाइन नतिजा तथा मार्कसिट पोर्टल (Class 1 - 12)</p>
+                </div>
+            </div>
+            <!-- Tab Navigation & Auth Controls -->
+            <nav class="flex items-center gap-2 bg-indigo-800 p-1.5 rounded-xl">
+                <button onclick="switchTab('student')" id="tab-student" class="px-4 py-2 rounded-lg text-sm font-bold transition-all bg-yellow-500 text-slate-900 shadow flex items-center gap-2">
+                    <i class="fa-solid fa-user-graduate"></i> विद्यार्थी पोर्टल
+                </button>
+                <button onclick="switchTab('admin')" id="tab-admin" class="px-4 py-2 rounded-lg text-sm font-bold transition-all text-white hover:bg-indigo-700 flex items-center gap-2">
+                    <i class="fa-solid fa-lock"></i> एडमिन प्यानल
+                </button>
+                <div id="admin-logout-btn" class="hidden border-l border-indigo-700 pl-2">
+                    <button onclick="logoutAdmin()" class="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-2 rounded-lg font-bold flex items-center gap-1 shadow">
+                        <i class="fa-solid fa-right-from-bracket"></i> लगआउट
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto p-4 md:p-6">
+
+        <!-- ================= STUDENT PORTAL (PUBLIC RESULT SEARCH) ================= -->
+        <section id="view-student" class="space-y-6">
+            <!-- Search Form Card -->
+            <div class="bg-white rounded-xl shadow-md p-6 max-w-2xl mx-auto border border-slate-200 no-print">
+                <div class="text-center mb-6">
+                    <span class="bg-indigo-100 text-indigo-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Student Portal</span>
+                    <h2 class="text-2xl font-bold text-slate-800 mt-2 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-magnifying-glass text-indigo-600"></i> परीक्षा नतिजा खोज्नुहोस्
+                    </h2>
+                    <p class="text-xs text-slate-500 mt-1">तपाईंको कक्षा र सिम्बोल / रोल नम्बर राखेर मार्कसिट प्राप्त गर्नुहोस्।</p>
+                </div>
+
+                <form id="search-form" onsubmit="handleSearch(event)" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">कक्षा (Class) *</label>
+                            <select id="search-class" class="w-full border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-indigo-500 outline-none" required>
+                                <option value="">-- कक्षा छान्नुहोस् --</option>
+                                <option value="1">कक्षा १ (Class 1)</option>
+                                <option value="2">कक्षा २ (Class 2)</option>
+                                <option value="3">कक्षा ३ (Class 3)</option>
+                                <option value="4">कक्षा ४ (Class 4)</option>
+                                <option value="5">कक्षा ५ (Class 5)</option>
+                                <option value="6">कक्षा ६ (Class 6)</option>
+                                <option value="7">कक्षा ७ (Class 7)</option>
+                                <option value="8">कक्षा ८ (Class 8)</option>
+                                <option value="9">कक्षा ९ (Class 9)</option>
+                                <option value="10">कक्षा १० (Class 10 - SEE)</option>
+                                <option value="11">कक्षा ११ (Class 11)</option>
+                                <option value="12">कक्षा १२ (Class 12 - NEB)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">सिम्बोल / रोल नं. (Symbol / Roll No) *</label>
+                            <input type="text" id="search-roll" placeholder="उदा: 1001" class="w-full border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-indigo-500 outline-none" required>
+                        </div>
+                    </div>
+                    <div class="flex flex-col sm:flex-row justify-between items-center gap-3 pt-2">
+                        <!-- Quick Share Link Button -->
+                        <button type="button" onclick="copyPortalLink()" class="w-full sm:w-auto text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 font-bold px-4 py-2.5 rounded-lg text-xs flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-link"></i> पोर्टलको लिंक कपि गर्नुहोस्
+                        </button>
+                        <button type="submit" class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 py-3 rounded-lg shadow-md transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-magnifying-glass"></i> नतिजा हेर्नुहोस्
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Result Display Box -->
+            <div id="result-container" class="hidden">
+                <!-- Actions Bar -->
+                <div class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3 mb-4 no-print">
+                    <button onclick="hideResult()" class="text-sm font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1">
+                        <i class="fa-solid fa-arrow-left"></i> अर्को नतिजा खोज्नुहोस्
+                    </button>
+                    <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+                        <button onclick="shareOnWhatsApp()" class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-bold shadow text-xs flex items-center gap-1.5">
+                            <i class="fa-brands fa-whatsapp text-lg"></i> WhatsApp मा पठाउनुहोस्
+                        </button>
+                        <button onclick="window.print()" class="bg-indigo-700 hover:bg-indigo-800 text-white px-4 py-2 rounded-lg font-bold shadow text-xs flex items-center gap-1.5">
+                            <i class="fa-solid fa-print"></i> प्रिन्ट / PDF
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Printable Marksheet Card -->
+                <div class="max-w-4xl mx-auto bg-white border-4 border-indigo-900 rounded-xl p-6 md:p-8 shadow-xl print-container relative">
+                    
+                    <!-- School Header Dynamic -->
+                    <div class="text-center border-b-2 border-indigo-900 pb-3 mb-4 print-header-padding">
+                        <div class="flex justify-between items-center mb-1">
+                            <!-- Left Dynamic Logo -->
+                            <div id="ms-logo-left-box" class="w-16 h-16 bg-indigo-50 rounded-full flex items-center justify-center text-indigo-900 font-bold text-2xl border border-indigo-200 overflow-hidden">
+                                <i class="fa-solid fa-school"></i>
+                            </div>
+
+                            <div class="px-2">
+                                <h2 id="ms-school-name-np" class="text-xl md:text-2xl font-extrabold text-indigo-950 uppercase tracking-wide">श्री ज्ञानोदय माध्यमिक विद्यालय</h2>
+                                <p id="ms-school-name-en" class="text-xs md:text-sm font-medium text-slate-600">Gyanodaya Secondary School</p>
+                                <p id="ms-school-address" class="text-[11px] text-slate-500">काठमाडौँ, नेपाल | स्थापना: २००८</p>
+                                <span class="inline-block mt-1 bg-indigo-900 text-white text-[10px] md:text-xs px-3 py-0.5 rounded-full font-bold uppercase tracking-wider">OFFICIAL GRADE SHEET</span>
+                            </div>
+
+                            <!-- Right Dynamic Emblem / Badge -->
+                            <div class="w-16 h-16 bg-indigo-50 rounded-full flex items-center justify-center text-indigo-900 font-bold text-2xl border border-indigo-200">
+                                <i class="fa-solid fa-award"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Student Info Grid -->
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-y-2 gap-x-4 text-xs md:text-sm mb-4 bg-slate-50 p-3 rounded-lg border border-slate-200 print-mb print-compact-text">
+                        <div><span class="text-slate-500 font-semibold">विद्यार्थीको नाम:</span> <span id="res-name" class="font-bold text-slate-800"></span></div>
+                        <div><span class="text-slate-500 font-semibold">कक्षा (Class):</span> <span id="res-class" class="font-bold text-slate-800"></span></div>
+                        <div><span class="text-slate-500 font-semibold">रोल नम्बर (Roll No):</span> <span id="res-roll" class="font-bold text-slate-800"></span></div>
+                        <div><span class="text-slate-500 font-semibold">जन्ममिति (DOB):</span> <span id="res-dob" class="font-bold text-slate-800"></span></div>
+                        <div><span class="text-slate-500 font-semibold">शैक्षिक वर्ष (Year):</span> <span id="res-year" class="font-bold text-slate-800"></span></div>
+                        <div><span class="text-slate-500 font-semibold">परीक्षा (Exam):</span> <span id="res-exam-type" class="font-bold text-indigo-700"></span></div>
+                    </div>
+
+                    <!-- Marks Table -->
+                    <div class="overflow-x-auto mb-4 print-mb">
+                        <table class="w-full border-collapse border border-slate-300 text-xs md:text-sm text-center print-compact-table">
+                            <thead>
+                                <tr class="bg-indigo-900 text-white">
+                                    <th class="border border-slate-300 px-3 py-1.5 text-left">विषय (Subject)</th>
+                                    <th class="border border-slate-300 px-2 py-1.5">Credit Hour (CH)</th>
+                                    <th class="border border-slate-300 px-2 py-1.5">Theory Marks</th>
+                                    <th class="border border-slate-300 px-2 py-1.5">Practical Marks</th>
+                                    <th class="border border-slate-300 px-2 py-1.5">Total Marks</th>
+                                    <th class="border border-slate-300 px-2 py-1.5">Grade</th>
+                                    <th class="border border-slate-300 px-2 py-1.5">Grade Point (GP)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="res-table-body">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Summary & Final GPA -->
+                    <div class="flex flex-row justify-between items-center bg-indigo-50 border border-indigo-200 rounded-lg p-3 mb-4 gap-4 print-mb">
+                        <div class="text-xs md:text-sm">
+                            <p class="font-semibold text-slate-700">कुल क्रेडिट आवर (Total CH): <span id="res-total-ch" class="font-bold text-indigo-900"></span></p>
+                            <p class="font-semibold text-slate-700">नतिजा स्थिति (Status): <span id="res-status" class="font-bold"></span></p>
+                        </div>
+                        <div class="text-center bg-white px-4 py-1.5 rounded-lg border border-indigo-300 shadow-sm">
+                            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wide block">Grade Point Average (GPA)</span>
+                            <span id="res-gpa" class="text-xl md:text-2xl font-extrabold text-indigo-900"></span>
+                        </div>
+                    </div>
+
+                    <!-- Grading Legend Table -->
+                    <div class="mb-4 print-mb">
+                        <h4 class="text-[10px] font-bold text-slate-600 mb-0.5 uppercase">Grading System Reference</h4>
+                        <table class="w-full border-collapse border border-slate-200 text-[9px] md:text-[10px] text-center print-compact-table">
+                            <tr class="bg-slate-100 font-bold">
+                                <td class="border p-0.5">Marks Range</td>
+                                <td class="border p-0.5">90-100%</td>
+                                <td class="border p-0.5">80-89%</td>
+                                <td class="border p-0.5">70-79%</td>
+                                <td class="border p-0.5">60-69%</td>
+                                <td class="border p-0.5">50-59%</td>
+                                <td class="border p-0.5">40-49%</td>
+                                <td class="border p-0.5">35-39%</td>
+                                <td class="border p-0.5">Below 35%</td>
+                            </tr>
+                            <tr>
+                                <td class="border p-0.5 font-bold">Grade</td>
+                                <td class="border p-0.5 font-bold text-emerald-600">A+</td>
+                                <td class="border p-0.5 font-bold text-emerald-600">A</td>
+                                <td class="border p-0.5 font-bold text-blue-600">B+</td>
+                                <td class="border p-0.5 font-bold text-blue-600">B</td>
+                                <td class="border p-0.5 font-bold text-yellow-600">C+</td>
+                                <td class="border p-0.5 font-bold text-yellow-600">C</td>
+                                <td class="border p-0.5 font-bold text-orange-600">D</td>
+                                <td class="border p-0.5 font-bold text-red-600">NG</td>
+                            </tr>
+                            <tr>
+                                <td class="border p-0.5 font-bold">Grade Point</td>
+                                <td class="border p-0.5">4.0</td>
+                                <td class="border p-0.5">3.6</td>
+                                <td class="border p-0.5">3.2</td>
+                                <td class="border p-0.5">2.8</td>
+                                <td class="border p-0.5">2.4</td>
+                                <td class="border p-0.5">2.0</td>
+                                <td class="border p-0.5">1.6</td>
+                                <td class="border p-0.5">0.0</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Dynamic Signatures Block -->
+                    <div class="grid grid-cols-3 gap-4 pt-6 text-center text-xs font-bold text-slate-700 print-pt">
+                        <div>
+                            <div class="border-b border-slate-400 mb-1 w-3/4 mx-auto"></div>
+                            <span id="res-prepared-by-name" class="block text-slate-900 font-extrabold text-[11px] leading-tight"></span>
+                            <span class="text-[10px] text-slate-500 font-semibold">तयार पार्ने (Prepared By)</span>
+                        </div>
+                        <div>
+                            <div class="border-b border-slate-400 mb-1 w-3/4 mx-auto"></div>
+                            <span id="res-checked-by-name" class="block text-slate-900 font-extrabold text-[11px] leading-tight"></span>
+                            <span class="text-[10px] text-slate-500 font-semibold">जाँच्ने (Checked By)</span>
+                        </div>
+                        <div>
+                            <div class="border-b border-slate-400 mb-1 w-3/4 mx-auto"></div>
+                            <span id="res-principal-name" class="block text-slate-900 font-extrabold text-[11px] leading-tight"></span>
+                            <span class="text-[10px] text-slate-500 font-semibold">प्रधानाध्यापक (Headmaster)</span>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Date of Issue -->
+                    <div class="mt-4 text-right text-[10px] md:text-xs text-slate-500">
+                        प्रकाशित मिति (Issue Date): <span id="res-issue-date" class="font-bold text-slate-800"></span>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= ADMIN LOGIN MODAL / PANEL ================= -->
+        <section id="view-admin" class="hidden space-y-6">
+
+            <!-- ADMIN LOGIN BOX -->
+            <div id="admin-login-box" class="bg-white rounded-xl shadow-xl p-8 max-w-md mx-auto border border-slate-200">
+                <div class="text-center mb-6">
+                    <div class="w-16 h-16 bg-indigo-100 text-indigo-800 rounded-full flex items-center justify-center mx-auto text-2xl mb-3">
+                        <i class="fa-solid fa-user-shield"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-slate-800">एडमिन लगइन (Admin Login)</h2>
+                    <p class="text-xs text-slate-500 mt-1">सुरक्षा PIN प्रयोग गरी एडमिन प्यानल खोल्नुहोस्।</p>
+                </div>
+
+                <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-1">Admin Security PIN *</label>
+                        <input type="password" id="admin-pin-input" placeholder="PIN राख्नुहोस् (Default: 1234)" class="w-full border border-slate-300 rounded-lg p-3 text-center text-lg tracking-widest font-bold focus:ring-2 focus:ring-indigo-500 outline-none" required>
+                    </div>
+                    <p id="login-error-msg" class="text-xs text-red-600 font-bold text-center hidden">गलत PIN! पुनः प्रयास गर्नुहोस्।</p>
+                    <button type="submit" class="w-full bg-indigo-900 hover:bg-indigo-950 text-white font-bold py-3 rounded-lg shadow-md transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-key"></i> लगइन गर्नुहोस्
+                    </button>
+                </form>
+            </div>
+
+            <!-- ADMIN DASHBOARD CONTENT -->
+            <div id="admin-dashboard-content" class="hidden space-y-6">
+                
+                <!-- School Profile & Settings Card -->
+                <div class="bg-indigo-50 rounded-xl shadow-md p-6 border border-indigo-200">
+                    <h2 class="text-lg font-bold text-indigo-900 mb-4 flex items-center gap-2 border-b border-indigo-200 pb-2">
+                        <i class="fa-solid fa-sliders text-indigo-600"></i> विद्यालयको विवरण, परीक्षा, हस्ताक्षरित नाम र Short URL सेटिङ
+                    </h2>
+                    
+                    <form id="school-settings-form" onsubmit="saveSchoolDetails(event)" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-600 mb-1">स्कुलको नाम (नेपाली) *</label>
+                                <input type="text" id="setting-school-np" class="w-full border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" required>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-600 mb-1">स्कुलको नाम (English) *</label>
+                                <input type="text" id="setting-school-en" class="w-full border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" required>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-600 mb-1">ठेगाना र स्थापना वर्ष *</label>
+                                <input type="text" id="setting-school-address" class="w-full border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" required>
+                            </div>
+                        </div>
+
+                        <!-- Shortcut URL Settings -->
+                        <div class="bg-indigo-100 p-4 rounded-lg border border-indigo-300">
+                            <label class="block text-xs font-bold uppercase text-indigo-950 mb-1"><i class="fa-solid fa-share-nodes text-indigo-600"></i> विद्यार्थीहरूलाई सेयर गर्ने Shortcut URL / TinyURL</label>
+                            <input type="url" id="setting-shortcut-url" placeholder="उदा: https://tinyurl.com/gyanodaya-result" class="w-full border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                            <p class="text-[11px] text-slate-500 mt-1">तपाईंले बनाएको TinyURL वा Netlify Shortcut Link यहाँ राख्नुहोस्। शेयर गर्दा यही लिंक प्रयोग हुनेछ।</p>
+                        </div>
+
+                        <!-- Academic Year & Exam Type Settings -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 bg-indigo-100/50 p-4 rounded-lg border border-indigo-200">
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-600 mb-1"><i class="fa-solid fa-calendar-days text-indigo-600"></i> शैक्षिक वर्ष (Academic Year) *</label>
+                                <input type="text" id="setting-academic-year" placeholder="उदा: २०८०" class="w-full border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" required>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-600 mb-1"><i class="fa-solid fa-file-pen text-indigo-600"></i> परीक्षाको प्रकार (Exam Type) *</label>
+                                <input type="text" id="setting-exam-type" placeholder="उदा: वार्षिक परीक्षा / प्रथम त्रैमासिक परीक्षा" class="w-full border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" required>
+                            </div>
+                        </div>
+
+                        <!-- Signatures & Issue Date Settings -->
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 pt-2 bg-white p-4 rounded-lg border border-indigo-200">
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-600 mb-1"><i class="fa-solid fa-user-pen text-indigo-600"></i> Prepared By Name</label>
+                                <input type="text" id="setting-prepared-by" placeholder="उदा: रामचन्द्र दाहाल" class="w-full border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-600 mb-1"><i class="fa-solid fa-user-check text-indigo-600"></i> Checked By Name</label>
+                                <input type="text" id="setting-checked-by" placeholder="उदा: सिता श्रेष्ठ" class="w-full border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-600 mb-1"><i class="fa-solid fa-user-tie text-indigo-600"></i> Principal / Headmaster Name</label>
+                                <input type="text" id="setting-principal" placeholder="उदा: डा. हरिप्रसाद कोइराला" class="w-full border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-600 mb-1"><i class="fa-solid fa-clock text-indigo-600"></i> प्रकाशित मिति (Issue Date) *</label>
+                                <input type="text" id="setting-issue-date" placeholder="उदा: २०८०/१२/२५" class="w-full border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" required>
+                            </div>
+                        </div>
+
+                        <!-- Logo Controls Box -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2 bg-white p-4 rounded-lg border border-indigo-100">
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-600 mb-1"><i class="fa-solid fa-upload text-indigo-600"></i> कम्प्युटर/मोबाइलबाट लोगो अपलोड गर्नुहोस्</label>
+                                <input type="file" id="setting-logo-file" accept="image/*" onchange="handleLogoFileUpload(event)" class="w-full text-xs text-slate-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-indigo-100 file:text-indigo-700 hover:file:bg-indigo-200">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-600 mb-1"><i class="fa-solid fa-link text-indigo-600"></i> वा लोगोको इमेज URL राख्नुहोस्</label>
+                                <input type="url" id="setting-logo-url" placeholder="https://example.com/logo.png" class="w-full border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-600 mb-1">नयाँ Admin PIN *</label>
+                                <input type="password" id="setting-admin-pin" class="w-full border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" required>
+                            </div>
+                        </div>
+
+                        <!-- Preview & Submit -->
+                        <div class="flex flex-col md:flex-row justify-between items-center gap-4 pt-2 border-t border-indigo-100">
+                            <div class="flex items-center gap-3">
+                                <span class="text-xs font-bold text-slate-600">हालको लोगो (Current Logo):</span>
+                                <div id="admin-logo-preview" class="w-12 h-12 bg-indigo-100 border border-indigo-300 rounded-full flex items-center justify-center overflow-hidden">
+                                    <i class="fa-solid fa-school text-indigo-900"></i>
+                                </div>
+                                <button type="button" onclick="removeLogo()" class="text-xs text-red-600 font-bold hover:underline">लोगो हटाउनुहोस्</button>
+                            </div>
+
+                            <button type="submit" class="w-full md:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2 rounded-lg text-sm shadow transition-all flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-check"></i> सबै सेटिङ सेभ गर्नुहोस्
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Add Result Form Card -->
+                <div class="bg-white rounded-xl shadow-md p-6 border border-slate-200">
+                    <h2 class="text-xl font-bold text-slate-800 mb-4 border-b pb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-user-plus text-indigo-600"></i> नयाँ विद्यार्थीको नतिजा प्रविष्टि (Add/Update Marks)
+                    </h2>
+                    
+                    <form id="admin-form" onsubmit="saveStudentResult(event)" class="space-y-6">
+                        <!-- Basic Details -->
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-600 mb-1">विद्यार्थीको नाम *</label>
+                                <input type="text" id="adm-name" placeholder="उदा: राम शर्मा" class="w-full border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" required>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-600 mb-1">कक्षा (Class) *</label>
+                                <select id="adm-class" onchange="generateSubjectInputs()" class="w-full border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" required>
+                                    <option value="">-- कक्षा छान्नुहोस् --</option>
+                                    <option value="1">Class 1</option>
+                                    <option value="2">Class 2</option>
+                                    <option value="3">Class 3</option>
+                                    <option value="4">Class 4</option>
+                                    <option value="5">Class 5</option>
+                                    <option value="6">Class 6</option>
+                                    <option value="7">Class 7</option>
+                                    <option value="8">Class 8</option>
+                                    <option value="9">Class 9</option>
+                                    <option value="10">Class 10 (SEE)</option>
+                                    <option value="11">Class 11</option>
+                                    <option value="12">Class 12 (NEB)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-600 mb-1">रोल नं. (Roll No) *</label>
+                                <input type="text" id="adm-roll" placeholder="उदा: 1001" class="w-full border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" required>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-600 mb-1">जन्ममिति (DOB) *</label>
+                                <input type="text" id="adm-dob" placeholder="YYYY-MM-DD" class="w-full border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" required>
+                            </div>
+                        </div>
+
+                        <!-- Dynamic Subject Inputs Container -->
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-700 mb-3 border-b pb-1">विषयगत प्राप्ताङ्क (Subject-wise Marks)</h3>
+                            <div id="subject-inputs-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                <p class="text-sm text-slate-500 italic col-span-full">कृपया पहिले कक्षा छान्नुहोस्।</p>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end gap-3 pt-2">
+                            <button type="reset" class="px-4 py-2 border border-slate-300 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-100">रिसेट (Reset)</button>
+                            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-2 rounded-lg text-sm shadow transition-all flex items-center gap-2">
+                                <i class="fa-solid fa-save"></i> नतिजा सेभ गर्नुहोस्
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Existing Student Records Table -->
+                <div class="bg-white rounded-xl shadow-md p-6 border border-slate-200">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-list-check text-indigo-600"></i> सेभ गरिएका विद्यार्थी नतिजाहरू
+                        </h2>
+                        <span id="record-count" class="bg-indigo-100 text-indigo-800 text-xs font-bold px-3 py-1 rounded-full">० Records</span>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-sm">
+                            <thead>
+                                <tr class="bg-slate-100 text-slate-700 border-b">
+                                    <th class="p-3">कक्षा</th>
+                                    <th class="p-3">रोल नं.</th>
+                                    <th class="p-3">विद्यार्थीको नाम</th>
+                                    <th class="p-3">जन्ममिति</th>
+                                    <th class="p-3">GPA</th>
+                                    <th class="p-3 text-center">कार्य (Actions)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="student-records-tbody" class="divide-y divide-slate-200">
+                                <!-- Records loaded via JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+        // System Security & State
+        let isAdminLoggedIn = false;
+        let adminPin = '1234';
+
+        // Current Active Student Result State for WhatsApp Sharing
+        let currentStudentResult = null;
+
+        // School Profile Details
+        let schoolInfo = {
+            nameNp: 'श्री ज्ञानोदय माध्यमिक विद्यालय',
+            nameEn: 'Gyanodaya Secondary School',
+            address: 'काठमाडौँ, नेपाल | स्थापना: २००८',
+            academicYear: '२०८०',
+            examType: 'वार्षिक परीक्षा',
+            preparedBy: 'रामचन्द्र दाहाल',
+            checkedBy: 'सिता श्रेष्ठ',
+            principal: 'डा. हरिप्रसाद कोइराला',
+            issueDate: '२०८०/१२/२५',
+            shortcutUrl: 'https://tinyurl.com/gyanodaya-result',
+            logoUrl: '' 
+        };
+
+        // Curriculum Database
+        const curriculumData = {
+            primary: [
+                { name: 'नेपाली (Nepali)', ch: 5 },
+                { name: 'अंग्रेजी (English)', ch: 5 },
+                { name: 'गणित (Mathematics)', ch: 5 },
+                { name: 'विज्ञान तथा प्रविधि (Science)', ch: 4 },
+                { name: 'हाम्रो वरपरको वातावरण (Social)', ch: 4 }
+            ],
+            lowerSec: [
+                { name: 'नेपाली (Nepali)', ch: 5 },
+                { name: 'अंग्रेजी (English)', ch: 5 },
+                { name: 'गणित (Mathematics)', ch: 5 },
+                { name: 'विज्ञान तथा प्रविधि (Science & Tech)', ch: 5 },
+                { name: 'सामाजिक अध्ययन (Social Studies)', ch: 4 },
+                { name: 'स्वास्थ्य तथा शारीरिक (Health & Physical)', ch: 3 }
+            ],
+            secondary: [
+                { name: 'नेपाली (Nepali)', ch: 4 },
+                { name: 'अंग्रेजी (English)', ch: 4 },
+                { name: 'गणित (Mathematics)', ch: 4 },
+                { name: 'विज्ञान (Science)', ch: 4 },
+                { name: 'सामाजिक अध्ययन (Social Studies)', ch: 4 },
+                { name: 'ऐच्छिक गणित / अर्थशास्त्र (Opt I)', ch: 4 },
+                { name: 'ऐच्छिक कम्प्युटर / लेखा (Opt II)', ch: 4 }
+            ],
+            higherSec: [
+                { name: 'Compulsory Nepali', ch: 3 },
+                { name: 'Compulsory English', ch: 4 },
+                { name: 'Compulsory Social / Mathematics', ch: 5 },
+                { name: 'Elective Subject I (Physics/Acc)', ch: 5 },
+                { name: 'Elective Subject II (Chemistry/Eco)', ch: 5 },
+                { name: 'Elective Subject III (Biology/Computer/Edu)', ch: 5 }
+            ]
+        };
+
+        // Sample Student Database
+        let studentDatabase = [
+            {
+                id: '1',
+                name: 'रामबहादुर श्रेष्ठ',
+                class: '10',
+                roll: '1001',
+                dob: '2063-04-12',
+                marks: [
+                    { name: 'नेपाली (Nepali)', ch: 4, th: 60, pr: 23 },
+                    { name: 'अंग्रेजी (English)', ch: 4, th: 70, pr: 24 },
+                    { name: 'गणित (Mathematics)', ch: 4, th: 72, pr: 25 },
+                    { name: 'विज्ञान (Science)', ch: 4, th: 65, pr: 24 },
+                    { name: 'सामाजिक अध्ययन (Social Studies)', ch: 4, th: 58, pr: 22 },
+                    { name: 'ऐच्छिक गणित / अर्थशास्त्र (Opt I)', ch: 4, th: 71, pr: 24 },
+                    { name: 'ऐच्छिक कम्प्युटर / लेखा (Opt II)', ch: 4, th: 73, pr: 25 }
+                ]
+            }
+        ];
+
+        // Handle File Upload & Convert to Base64
+        function handleLogoFileUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    schoolInfo.logoUrl = e.target.result;
+                    document.getElementById('setting-logo-url').value = '';
+                    updateLogoDisplays();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removeLogo() {
+            schoolInfo.logoUrl = '';
+            document.getElementById('setting-logo-url').value = '';
+            document.getElementById('setting-logo-file').value = '';
+            updateLogoDisplays();
+        }
+
+        // Render Logos everywhere on page
+        function updateLogoDisplays() {
+            const headerLogoBox = document.getElementById('header-logo-box');
+            const msLogoLeftBox = document.getElementById('ms-logo-left-box');
+            const adminLogoPreview = document.getElementById('admin-logo-preview');
+
+            if (schoolInfo.logoUrl) {
+                const imgHTML = `<img src="${schoolInfo.logoUrl}" alt="School Logo" class="w-full h-full object-cover rounded-full">`;
+                headerLogoBox.innerHTML = imgHTML;
+                msLogoLeftBox.innerHTML = imgHTML;
+                adminLogoPreview.innerHTML = imgHTML;
+            } else {
+                headerLogoBox.innerHTML = `<i class="fa-solid fa-graduation-cap text-2xl text-yellow-400"></i>`;
+                msLogoLeftBox.innerHTML = `<i class="fa-solid fa-school"></i>`;
+                adminLogoPreview.innerHTML = `<i class="fa-solid fa-school text-indigo-900"></i>`;
+            }
+        }
+
+        // Apply School Profile UI
+        function applySchoolDetails() {
+            document.getElementById('header-school-name').innerText = schoolInfo.nameNp;
+            document.getElementById('setting-school-np').value = schoolInfo.nameNp;
+            document.getElementById('setting-school-en').value = schoolInfo.nameEn;
+            document.getElementById('setting-school-address').value = schoolInfo.address;
+            document.getElementById('setting-academic-year').value = schoolInfo.academicYear;
+            document.getElementById('setting-exam-type').value = schoolInfo.examType;
+            document.getElementById('setting-prepared-by').value = schoolInfo.preparedBy;
+            document.getElementById('setting-checked-by').value = schoolInfo.checkedBy;
+            document.getElementById('setting-principal').value = schoolInfo.principal;
+            document.getElementById('setting-issue-date').value = schoolInfo.issueDate;
+            document.getElementById('setting-shortcut-url').value = schoolInfo.shortcutUrl;
+            document.getElementById('setting-admin-pin').value = adminPin;
+
+            document.getElementById('ms-school-name-np').innerText = schoolInfo.nameNp;
+            document.getElementById('ms-school-name-en').innerText = schoolInfo.nameEn;
+            document.getElementById('ms-school-address').innerText = schoolInfo.address;
+            document.getElementById('res-year').innerText = schoolInfo.academicYear;
+            document.getElementById('res-exam-type').innerText = schoolInfo.examType;
+            document.getElementById('res-prepared-by-name').innerText = schoolInfo.preparedBy;
+            document.getElementById('res-checked-by-name').innerText = schoolInfo.checkedBy;
+            document.getElementById('res-principal-name').innerText = schoolInfo.principal;
+            document.getElementById('res-issue-date').innerText = schoolInfo.issueDate;
+
+            updateLogoDisplays();
+        }
+
+        // Switch Tabs
+        function switchTab(tab) {
+            const studentView = document.getElementById('view-student');
+            const adminView = document.getElementById('view-admin');
+            const btnStudent = document.getElementById('tab-student');
+            const btnAdmin = document.getElementById('tab-admin');
+
+            if (tab === 'student') {
+                studentView.classList.remove('hidden');
+                adminView.classList.add('hidden');
+                btnStudent.className = 'px-4 py-2 rounded-lg text-sm font-bold transition-all bg-yellow-500 text-slate-900 shadow flex items-center gap-2';
+                btnAdmin.className = 'px-4 py-2 rounded-lg text-sm font-bold transition-all text-white hover:bg-indigo-700 flex items-center gap-2';
+            } else {
+                adminView.classList.remove('hidden');
+                studentView.classList.add('hidden');
+                btnAdmin.className = 'px-4 py-2 rounded-lg text-sm font-bold transition-all bg-yellow-500 text-slate-900 shadow flex items-center gap-2';
+                btnStudent.className = 'px-4 py-2 rounded-lg text-sm font-bold transition-all text-white hover:bg-indigo-700 flex items-center gap-2';
+
+                if (isAdminLoggedIn) {
+                    document.getElementById('admin-login-box').classList.add('hidden');
+                    document.getElementById('admin-dashboard-content').classList.remove('hidden');
+                    document.getElementById('admin-logout-btn').classList.remove('hidden');
+                    renderAdminTable();
+                } else {
+                    document.getElementById('admin-login-box').classList.remove('hidden');
+                    document.getElementById('admin-dashboard-content').classList.add('hidden');
+                    document.getElementById('admin-logout-btn').classList.add('hidden');
+                }
+            }
+        }
+
+        // Admin Auth Login
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const inputPin = document.getElementById('admin-pin-input').value;
+            const errorMsg = document.getElementById('login-error-msg');
+
+            if (inputPin === adminPin) {
+                isAdminLoggedIn = true;
+                errorMsg.classList.add('hidden');
+                document.getElementById('admin-pin-input').value = '';
+                switchTab('admin');
+            } else {
+                errorMsg.classList.remove('hidden');
+            }
+        }
+
+        // Admin Logout
+        function logoutAdmin() {
+            isAdminLoggedIn = false;
+            switchTab('student');
+            alert('एडमिन प्यानल लगआउट भयो।');
+        }
+
+        // Save School Profile & Settings
+        function saveSchoolDetails(e) {
+            e.preventDefault();
+            schoolInfo.nameNp = document.getElementById('setting-school-np').value.trim();
+            schoolInfo.nameEn = document.getElementById('setting-school-en').value.trim();
+            schoolInfo.address = document.getElementById('setting-school-address').value.trim();
+            schoolInfo.academicYear = document.getElementById('setting-academic-year').value.trim();
+            schoolInfo.examType = document.getElementById('setting-exam-type').value.trim();
+            schoolInfo.preparedBy = document.getElementById('setting-prepared-by').value.trim();
+            schoolInfo.checkedBy = document.getElementById('setting-checked-by').value.trim();
+            schoolInfo.principal = document.getElementById('setting-principal').value.trim();
+            schoolInfo.issueDate = document.getElementById('setting-issue-date').value.trim();
+            schoolInfo.shortcutUrl = document.getElementById('setting-shortcut-url').value.trim();
+            adminPin = document.getElementById('setting-admin-pin').value.trim();
+
+            const inputUrl = document.getElementById('setting-logo-url').value.trim();
+            if (inputUrl) {
+                schoolInfo.logoUrl = inputUrl;
+            }
+
+            applySchoolDetails();
+            alert('सबै सेटिङ, Short URL र हस्ताक्षरकर्ताहरूको नामावली सफलतापुर्वक सेभ भयो!');
+        }
+
+        function gradeToGP(grade) {
+            switch (grade) {
+                case 'A+': return 4.0;
+                case 'A': return 3.6;
+                case 'B+': return 3.2;
+                case 'B': return 2.8;
+                case 'C+': return 2.4;
+                case 'C': return 2.0;
+                case 'D': return 1.6;
+                case 'NG': return 0.0;
+                default: return 0.0;
+            }
+        }
+
+        // Convert total marks (out of 100) to the existing grading scale.
+        function calculateFinalGradeFromMarks(totalMarks) {
+            const percentage = Number(totalMarks) || 0;
+            if (percentage >= 90) return { grade: 'A+', gp: 4.0 };
+            if (percentage >= 80) return { grade: 'A', gp: 3.6 };
+            if (percentage >= 70) return { grade: 'B+', gp: 3.2 };
+            if (percentage >= 60) return { grade: 'B', gp: 2.8 };
+            if (percentage >= 50) return { grade: 'C+', gp: 2.4 };
+            if (percentage >= 40) return { grade: 'C', gp: 2.0 };
+            if (percentage >= 35) return { grade: 'D', gp: 1.6 };
+            return { grade: 'NG', gp: 0.0 };
+        }
+
+        function handleSearch(e) {
+            e.preventDefault();
+            const cls = document.getElementById('search-class').value;
+            const roll = document.getElementById('search-roll').value.trim();
+
+            const student = studentDatabase.find(s => s.class === cls && s.roll === roll);
+
+            if (!student) {
+                alert('माफ गर्नुहोस्! तोकिएको कक्षा र रोल नम्बरको नतिजा भेटिएन।');
+                return;
+            }
+
+            displayMarksheet(student);
+        }
+
+        function displayMarksheet(student) {
+            currentStudentResult = student; // Store for sharing
+
+            document.getElementById('res-name').innerText = student.name;
+            document.getElementById('res-class').innerText = student.class;
+            document.getElementById('res-roll').innerText = student.roll;
+            document.getElementById('res-dob').innerText = student.dob;
+            document.getElementById('res-year').innerText = schoolInfo.academicYear;
+            document.getElementById('res-exam-type').innerText = schoolInfo.examType;
+            document.getElementById('res-prepared-by-name').innerText = schoolInfo.preparedBy;
+            document.getElementById('res-checked-by-name').innerText = schoolInfo.checkedBy;
+            document.getElementById('res-principal-name').innerText = schoolInfo.principal;
+            document.getElementById('res-issue-date').innerText = schoolInfo.issueDate;
+
+            const tbody = document.getElementById('res-table-body');
+            tbody.innerHTML = '';
+
+            let totalCreditHours = 0;
+            let weightedGP = 0;
+            let hasNG = false;
+
+            student.marks.forEach(item => {
+                const theoryMarks = Number(item.th) || 0;
+                const practicalMarks = Number(item.pr) || 0;
+                const totalMarks = theoryMarks + practicalMarks;
+                const finalEval = calculateFinalGradeFromMarks(totalMarks);
+                totalCreditHours += item.ch;
+                weightedGP += (finalEval.gp * item.ch);
+
+                if (totalMarks < 35) hasNG = true;
+
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50 border-b border-slate-200';
+                tr.innerHTML = `
+                    <td class="border border-slate-300 px-3 py-1.5 text-left font-semibold text-slate-700">${item.name}</td>
+                    <td class="border border-slate-300 px-2 py-1.5">${item.ch}</td>
+                    <td class="border border-slate-300 px-2 py-1.5 font-bold">${theoryMarks}</td>
+                    <td class="border border-slate-300 px-2 py-1.5 font-bold">${practicalMarks}</td>
+                    <td class="border border-slate-300 px-2 py-1.5 font-extrabold text-indigo-900">${totalMarks}</td>
+                    <td class="border border-slate-300 px-2 py-1.5 font-extrabold text-indigo-900">${finalEval.grade}</td>
+                    <td class="border border-slate-300 px-2 py-1.5 font-bold">${finalEval.gp.toFixed(2)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            const finalGPA = (weightedGP / totalCreditHours).toFixed(2);
+            student.computedGPA = hasNG ? 'NG' : finalGPA;
+
+            document.getElementById('res-total-ch').innerText = totalCreditHours;
+            document.getElementById('res-gpa').innerText = student.computedGPA;
+            
+            const statusElem = document.getElementById('res-status');
+            if (hasNG) {
+                statusElem.innerText = 'Not Graded (Non-Passed)';
+                statusElem.className = 'font-bold text-red-600';
+            } else {
+                statusElem.innerText = 'PASSED (उत्तीर्ण)';
+                statusElem.className = 'font-bold text-emerald-600';
+            }
+
+            document.getElementById('result-container').classList.remove('hidden');
+            document.getElementById('result-container').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function hideResult() {
+            document.getElementById('result-container').classList.add('hidden');
+        }
+
+        // WhatsApp Direct Share Function
+        function shareOnWhatsApp() {
+            if (!currentStudentResult) return;
+
+            const link = schoolInfo.shortcutUrl || window.location.href;
+            const text = `🎓 *${schoolInfo.nameNp}*\n` +
+                         `*${schoolInfo.examType} (${schoolInfo.academicYear})*\n\n` +
+                         `👤 विद्यार्थीको नाम: *${currentStudentResult.name}*\n` +
+                         `🏫 कक्षा: *${currentStudentResult.class}* | रोल नं: *${currentStudentResult.roll}*\n` +
+                         `📊 प्राप्त GPA: *${currentStudentResult.computedGPA}*\n\n` +
+                         `🔗 अनलाइन नतिजा हेर्ने लिंक: ${link}`;
+
+            const encodedText = encodeURIComponent(text);
+            window.open(`https://wa.me/?text=${encodedText}`, '_blank');
+        }
+
+        // Copy Link to Clipboard Function
+        function copyPortalLink() {
+            const link = schoolInfo.shortcutUrl || window.location.href;
+            navigator.clipboard.writeText(link).then(() => {
+                alert("रिजल्ट पोर्टलको Shortcut Link कपि भयो: \n" + link);
+            });
+        }
+
+        function generateSubjectInputs() {
+            const cls = parseInt(document.getElementById('adm-class').value);
+            const container = document.getElementById('subject-inputs-grid');
+            container.innerHTML = '';
+
+            if (!cls) {
+                container.innerHTML = '<p class="text-sm text-slate-500 italic col-span-full">कृपया पहिले कक्षा छान्नुहोस्।</p>';
+                return;
+            }
+
+            let subjects = [];
+            if (cls <= 5) subjects = curriculumData.primary;
+            else if (cls <= 8) subjects = curriculumData.lowerSec;
+            else if (cls <= 10) subjects = curriculumData.secondary;
+            else subjects = curriculumData.higherSec;
+
+            subjects.forEach((sub) => {
+                const card = document.createElement('div');
+                card.className = 'bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-2';
+                card.innerHTML = `
+                    <p class="text-xs font-bold text-indigo-900 border-b pb-1">${sub.name} (CH: ${sub.ch})</p>
+                    <input type="hidden" class="sub-name" value="${sub.name}">
+                    <input type="hidden" class="sub-ch" value="${sub.ch}">
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-500">Theory Marks (75)</label>
+                            <input type="number" min="0" max="75" step="0.01" value="0" class="sub-th w-full border border-slate-300 rounded p-1.5 text-xs outline-none focus:ring-1 focus:ring-indigo-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-500">Practical Marks (25)</label>
+                            <input type="number" min="0" max="25" step="0.01" value="0" class="sub-pr w-full border border-slate-300 rounded p-1.5 text-xs outline-none focus:ring-1 focus:ring-indigo-500" required>
+                        </div>
+                    </div>
+                    <div class="text-[10px] text-slate-500 font-semibold">Total: <span class="subject-total font-bold text-indigo-700">0</span> / 100</div>
+                `;
+                container.appendChild(card);
+                const thInput = card.querySelector('.sub-th');
+                const prInput = card.querySelector('.sub-pr');
+                const totalEl = card.querySelector('.subject-total');
+                const updateTotal = () => { totalEl.textContent = ((Number(thInput.value) || 0) + (Number(prInput.value) || 0)).toFixed(2).replace(/\.00$/, ''); };
+                thInput.addEventListener('input', updateTotal);
+                prInput.addEventListener('input', updateTotal);
+            });
+        }
+
+        function saveStudentResult(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('adm-name').value.trim();
+            const cls = document.getElementById('adm-class').value;
+            const roll = document.getElementById('adm-roll').value.trim();
+            const dob = document.getElementById('adm-dob').value.trim();
+
+            const names = document.querySelectorAll('.sub-name');
+            const chs = document.querySelectorAll('.sub-ch');
+            const ths = document.querySelectorAll('.sub-th');
+            const prs = document.querySelectorAll('.sub-pr');
+
+            let marks = [];
+            names.forEach((elem, idx) => {
+                marks.push({
+                    name: elem.value,
+                    ch: parseFloat(chs[idx].value),
+                    th: parseFloat(ths[idx].value) || 0,
+                    pr: parseFloat(prs[idx].value) || 0
+                });
+            });
+
+            const existingIdx = studentDatabase.findIndex(s => s.class === cls && s.roll === roll);
+            if (existingIdx >= 0) {
+                studentDatabase[existingIdx] = { id: studentDatabase[existingIdx].id, name, class: cls, roll, dob, marks };
+                alert('विद्यार्थीको नतिजा सफलतापूर्वक अपडेट गरियो!');
+            } else {
+                studentDatabase.push({
+                    id: Date.now().toString(),
+                    name, class: cls, roll, dob, marks
+                });
+                alert('नयाँ विद्यार्थी नतिजा सेभ भयो!');
+            }
+
+            document.getElementById('admin-form').reset();
+            document.getElementById('subject-inputs-grid').innerHTML = '<p class="text-sm text-slate-500 italic col-span-full">कृपया पहिले कक्षा छान्नुहोस्।</p>';
+            renderAdminTable();
+        }
+
+        function renderAdminTable() {
+            const tbody = document.getElementById('student-records-tbody');
+            const countElem = document.getElementById('record-count');
+            tbody.innerHTML = '';
+
+            countElem.innerText = `${studentDatabase.length} Records`;
+
+            if (studentDatabase.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center p-4 text-slate-400">कुनै नतिजा भेटिएन।</td></tr>`;
+                return;
+            }
+
+            studentDatabase.forEach(st => {
+                let totalCH = 0, weightedGP = 0;
+                st.marks.forEach(m => {
+                    totalCH += m.ch;
+                    weightedGP += (calculateFinalGradeFromMarks((Number(m.th) || 0) + (Number(m.pr) || 0)).gp * m.ch);
+                });
+                const gpa = (weightedGP / totalCH).toFixed(2);
+
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50 border-b border-slate-100';
+                tr.innerHTML = `
+                    <td class="p-3 font-semibold text-slate-700">Class ${st.class}</td>
+                    <td class="p-3 font-bold text-indigo-900">${st.roll}</td>
+                    <td class="p-3 font-semibold">${st.name}</td>
+                    <td class="p-3 text-slate-500">${st.dob}</td>
+                    <td class="p-3"><span class="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded font-bold">${gpa}</span></td>
+                    <td class="p-3 text-center space-x-2">
+                        <button onclick="previewStudent('${st.class}', '${st.roll}')" class="text-indigo-600 hover:text-indigo-900 font-semibold text-xs bg-indigo-50 p-1.5 rounded"><i class="fa-solid fa-eye"></i> हेर्नुहोस्</button>
+                        <button onclick="deleteRecord('${st.id}')" class="text-red-600 hover:text-red-900 font-semibold text-xs bg-red-50 p-1.5 rounded"><i class="fa-solid fa-trash"></i> मेटाउनुहोस्</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function previewStudent(cls, roll) {
+            switchTab('student');
+            document.getElementById('search-class').value = cls;
+            document.getElementById('search-roll').value = roll;
+            const student = studentDatabase.find(s => s.class === cls && s.roll === roll);
+            if (student) displayMarksheet(student);
+        }
+
+        function deleteRecord(id) {
+            if (confirm('के तपाईं यस नतिजाको रेकर्ड मेटाउन चाहनुहुन्छ?')) {
+                studentDatabase = studentDatabase.filter(s => s.id !== id);
+                renderAdminTable();
+            }
+        }
+
+        window.onload = function() {
+            applySchoolDetails();
+        };
+    </script>
+</body>
+</html>
