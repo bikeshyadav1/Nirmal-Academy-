@@ -6,7 +6,9 @@
      crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <!-- Favicon -->
+<link rel="icon" type="image/png" href="logo1.png.png">
+<link rel="apple-touch-icon" href="logo1.png.png">
     <title>Nirmal Academy English Aawasiya vidyalaya, Sarlahi | Online Result</title>
 
 <meta name="description" content="Nirmal Academy English Aawasiya vidyalaya, Lalbandi-09, Bastipur, Sarlahi, Nepal. Check student exam results, GPA, marksheet and academic information online.">
@@ -81,6 +83,19 @@
                 padding-top: 16px !important;
             }
         }
+         .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+    }
+
+    .logo img {
+        width: 80px;
+        height: 80px;
+        object-fit: contain;
+        border-radius: 8px;
+    }
     </style>
 </head>
 <body class="bg-slate-100 min-h-screen text-slate-800">
@@ -90,15 +105,13 @@
         <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="flex items-center space-x-3">
                 <!-- Dynamic Header School Logo -->
-               <div id="header-logo-box"
-     class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center overflow-hidden border border-indigo-4">
-    <img src="logo.png.png"
-         alt="School Logo"
-         class="w-full h-full object-contain p-1">
-</div>
+                <a href="index.html" class="logo">
+                <img src="logo1.png.png" alt="Plus 2 Guru Logo">
+
+            </a>
                 <div>
-                    <h1 class="text-2xl font-bold leading-tight" id="header-school-name">निर्मल एकेडेमी अंग्रेजी आवासीय  विद्यालय</h1>
-                    <p class="text-xs text-indigo-200">अनलाइन नतिजा तथा मार्कसिट पोर्टल (Class 1 - 12)</p>
+                    <h1 class="text-2xl font-bold leading-tight" id="header-school-name">Nirmal Academy English Aawasiya vidyalaya, Sarlahi</h1>
+                    <p >Lalbandi-09,Sarlahi </p><p> अनलाइन नतिजा तथा मार्कसिट पोर्टल (Class 1 - 12)</p>
                 </div>
             </div>
             <!-- Tab Navigation & Auth Controls -->
@@ -193,9 +206,11 @@
                     <div class="text-center border-b-2 border-indigo-900 pb-3 mb-4 print-header-padding">
                         <div class="flex justify-between items-center mb-1">
                             <!-- Left Dynamic Logo -->
-                            <div id="ms-logo-left-box" class="w-16 h-16 bg-indigo-50 rounded-full flex items-center justify-center text-indigo-900 font-bold text-2xl border border-indigo-200 overflow-hidden">
-                                <i class="fa-solid fa-school"></i>
-                            </div>
+                            
+                <a href="index.html" class="logo">
+                <img src="logo1.png.png" alt="Plus 2 Guru Logo">
+
+            </a>
 
                             <div class="px-2">
                                 <h2 id="ms-school-name-np" class="text-xl md:text-2xl font-extrabold text-indigo-950 uppercase tracking-wide">निर्मल एकेडेमी अंग्रेजी आवासीय विद्यालय</h2>
@@ -547,7 +562,7 @@
 
         // School Profile Details
         let schoolInfo = {
-            nameNp: 'निर्मल एकेडेमी अंग्रेजी आवासीय विद्यालय',
+            nameNp: 'Nirmal Academy English Aawasiya vidyalaya ',
             nameEn: 'Nirmal Academy Eng. Board. School',
             address: 'लालबन्दी–०९,बस्तीपुर,सर्लाही,नेपाल | स्थापना: २०६९',
             academicYear: '२०८३',
