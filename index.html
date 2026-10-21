@@ -277,24 +277,33 @@ footer{text-align:center;padding:24px 16px;color:var(--muted);font-size:.87rem}
   let currentUser = null;
   let currentRecords = [];
   const responsesRef = window.surveyDb.ref(RESPONSES_PATH);
-  // Do not block mobile submissions while the initial realtime read is still loading.
-  // The write itself is awaited and reports any database/rules error to the user.
+  // Allow submissions immediately; each Firebase write is awaited and reports real save errors.
+  // Read survey records only after administrator sign-in so public visitors do not trigger
+  // permission-denied warnings when database rules restrict reads to authenticated admins.
   firebaseReady = true;
-  responsesRef.on("value", snapshot => {
-    const data = snapshot.val() || {};
-    currentRecords = Object.entries(data).map(([id, record]) => ({ ...record, id }));
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(currentRecords)); } catch (e) {}
-    firebaseReady = true;
-    if (dashboard.style.display === "block") renderRecords();
-  }, error => {
-    console.error("Realtime Database listener failed:", error);
-    // Keep submission enabled: writes will independently succeed or show their own error.
-    const status = document.getElementById("formNotice");
-    if (status && !status.classList.contains("success")) {
-      status.className = "notice error";
-      status.textContent = "Could not load live survey data. You may still submit; if saving fails, check Firebase Database URL and Rules.";
-    }
-  });
+  let recordsListenerAttached = false;
+  function attachRecordsListener() {
+    if (recordsListenerAttached) return;
+    recordsListenerAttached = true;
+    responsesRef.on("value", snapshot => {
+      const data = snapshot.val() || {};
+      currentRecords = Object.entries(data).map(([id, record]) => ({ ...record, id }));
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(currentRecords)); } catch (e) {}
+      if (dashboard.style.display === "block") renderRecords();
+    }, error => {
+      console.error("Realtime Database read failed after admin sign-in:", error);
+      recordsListenerAttached = false;
+      const status = document.getElementById("loginError");
+      if (status) {
+        status.textContent = "Signed in, but survey records could not be loaded. Check Realtime Database URL and read permissions for authenticated admins.";
+        status.style.display = "block";
+      }
+    });
+  }
+  function detachRecordsListener() {
+    if (recordsListenerAttached) responsesRef.off("value");
+    recordsListenerAttached = false;
+  }
   function readRecords() { return Array.isArray(currentRecords) ? currentRecords : []; }
   async function writeRecords(records) {
     const payload = {};
@@ -373,6 +382,7 @@ footer{text-align:center;padding:24px 16px;color:var(--muted);font-size:.87rem}
     try {
       const credential = await window.surveyAuth.signInWithEmailAndPassword(email, password);
       currentUser = credential.user;
+      attachRecordsListener();
       loginBox.style.display = "none";
       dashboard.style.display = "block";
       renderRecords();
@@ -385,6 +395,7 @@ footer{text-align:center;padding:24px 16px;color:var(--muted);font-size:.87rem}
   document.getElementById("loginBtn").addEventListener("click", login);
   document.getElementById("adminPassword").addEventListener("keydown", e => { if (e.key === "Enter") login(); });
   document.getElementById("logoutBtn").addEventListener("click", async () => {
+    detachRecordsListener();
     try { await window.surveyAuth.signOut(); } catch (e) { console.error(e); }
     currentUser = null;
     dashboard.style.display = "none";
