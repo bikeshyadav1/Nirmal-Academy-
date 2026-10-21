@@ -4,16 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Digital Technology Usage Survey</title>
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="surveylogo.png.png">
+<link rel="apple-touch-icon" href="surveylogo.png.png">
 <style>
 :root{--primary:#4f46e5;--primary-dark:#3730a3;--ink:#172033;--muted:#667085;--line:#e5e7eb;--bg:#f5f7fb;--card:#fff;--green:#0f9f6e;--red:#dc2626}
 *{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
 header{background:linear-gradient(120deg,#312e81,#4f46e5 55%,#0891b2);color:white;padding:34px 18px 54px}
-.header-inner{max-width:1050px;margin:auto}.topline{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.brand{font-weight:800;letter-spacing:.2px;font-size:1.05rem}.admin-open{border:1px solid #ffffff80;background:#ffffff18;color:white;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:700}.admin-open:hover{background:#ffffff2c}
+.header-inner{max-width:1050px;margin:auto}.topline{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.brand{font-weight:800;letter-spacing:.2px;font-size:1.05rem}.admin-open{width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;flex:0 0 34px;border:1px solid #ffffff70;background:#ffffff18;color:white;padding:0;border-radius:9px;cursor:pointer;font-size:15px;line-height:1;box-shadow:0 2px 8px #11182718}.admin-open:hover{background:#ffffff30}.admin-open:focus-visible{outline:2px solid white;outline-offset:3px}
 h1{font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.12;margin:32px 0 12px;max-width:760px}.subtitle{max-width:720px;color:#e0e7ff;margin:0}.hero-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}.tag{font-size:.82rem;border-radius:999px;background:#ffffff20;border:1px solid #ffffff30;padding:6px 11px}
-main{max-width:1050px;margin:-28px auto 50px;padding:0 16px}.layout{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:20px;align-items:start}.card{background:var(--card);border:1px solid #e8ebf2;border-radius:18px;box-shadow:0 10px 30px #1b24500b}.form-card{padding:clamp(18px,3vw,30px)}.side-card{padding:22px;position:sticky;top:18px}.section-title{margin:28px 0 15px;padding-bottom:10px;border-bottom:1px solid var(--line);font-size:1.12rem;display:flex;align-items:center;gap:10px}.section-title:first-child{margin-top:0}.section-number{width:29px;height:29px;display:inline-grid;place-items:center;border-radius:9px;background:#eef2ff;color:var(--primary);font-weight:800;font-size:.9rem}
+main{max-width:1320px;margin:-28px auto 50px;padding:0 16px}.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(380px,420px);gap:24px;align-items:start}.card{background:var(--card);border:1px solid #e8ebf2;border-radius:18px;box-shadow:0 10px 30px #1b24500b}.form-card{padding:clamp(18px,3vw,30px)}.side-card{padding:24px;position:relative;top:18px;min-width:0}.section-title{margin:28px 0 15px;padding-bottom:10px;border-bottom:1px solid var(--line);font-size:1.12rem;display:flex;align-items:center;gap:10px}.section-title:first-child{margin-top:0}.section-number{width:29px;height:29px;display:inline-grid;place-items:center;border-radius:9px;background:#eef2ff;color:var(--primary);font-weight:800;font-size:.9rem}
 .question{margin:0 0 23px}.question label.qtitle{display:block;font-weight:700;margin-bottom:10px}.required{color:var(--red)}.options{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:9px}.option{display:flex;align-items:flex-start;gap:9px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;cursor:pointer;transition:.15s;background:#fff;font-size:.94rem}.option:hover{border-color:#a5b4fc;background:#fafaff}.option:has(input:checked){border-color:var(--primary);background:#eef2ff}.option input{accent-color:var(--primary);margin-top:4px;flex:0 0 auto}
 .field{width:100%;padding:12px 13px;border:1px solid #d0d5dd;border-radius:10px;font:inherit;background:white;color:var(--ink)}.field:focus{outline:3px solid #c7d2fe;border-color:var(--primary)}.hint{font-size:.84rem;color:var(--muted);margin:7px 0 0}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:25px}.btn{border:0;border-radius:10px;padding:12px 17px;font:inherit;font-weight:750;cursor:pointer;transition:.15s}.btn-primary{background:var(--primary);color:white}.btn-primary:hover{background:var(--primary-dark)}.btn-light{background:#eef2f7;color:#344054}.btn-danger{background:#fee2e2;color:#991b1b}.btn-small{padding:8px 11px;font-size:.87rem}.notice{display:none;padding:13px 15px;border-radius:10px;margin:15px 0}.notice.success{display:block;background:#dcfce7;color:#166534}.notice.error{display:block;background:#fee2e2;color:#991b1b}.side-card h3{margin:0 0 9px}.side-card p{font-size:.92rem;color:var(--muted)}.progress-track{height:8px;background:#eef2f7;border-radius:99px;overflow:hidden;margin:12px 0}.progress-bar{height:100%;width:0;background:linear-gradient(90deg,#4f46e5,#06b6d4);transition:width .2s}.side-stat{padding:13px 0;border-top:1px solid var(--line)}.side-stat strong{display:block;font-size:1.3rem}.side-stat span{color:var(--muted);font-size:.85rem}
-footer{text-align:center;padding:24px 16px;color:var(--muted);font-size:.87rem}
+footer{text-align:center;padding:24px 16px;color:whitesmoke;font-size:.82rem;border-top:1px solid var(--line);background:#13218a}footer .footer-line{max-width:1050px;margin:0 auto;line-height:1.8}footer .footer-name{font-weight:750;color:white}
 .modal{display:none;position:fixed;inset:0;background:#0b1020b8;z-index:20;padding:18px;overflow:auto}.modal.show{display:block}.modal-box{max-width:1150px;margin:3vh auto;background:white;border-radius:18px;box-shadow:0 25px 80px #0003;overflow:hidden}.modal-head{padding:20px 24px;background:#111827;color:white;display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}.modal-head h2{margin:0;font-size:1.35rem}.close{border:0;background:#ffffff20;color:white;border-radius:8px;padding:8px 12px;font-size:1.1rem;cursor:pointer}.modal-content{padding:22px}.login-box{max-width:440px;margin:25px auto 35px}.login-box h3{margin-top:0}.login-box .field{margin:7px 0 12px}.admin-dashboard{display:none}.admin-toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}.admin-toolbar .field{flex:1;min-width:180px}.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:18px}.stat-card{border:1px solid var(--line);border-radius:12px;padding:15px}.stat-card span{display:block;color:var(--muted);font-size:.84rem}.stat-card strong{font-size:1.55rem}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px}table{width:100%;border-collapse:collapse;min-width:720px;font-size:.9rem}th,td{text-align:left;padding:12px;border-bottom:1px solid var(--line);vertical-align:top}th{background:#f8fafc;font-size:.8rem;text-transform:uppercase;letter-spacing:.04em;color:#475467}tr:last-child td{border-bottom:0}.table-actions{display:flex;gap:6px}.empty{text-align:center;padding:35px;color:var(--muted)}.privacy-note{font-size:.83rem;color:var(--muted);margin-top:14px}.detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.detail-item{padding:12px;border:1px solid var(--line);border-radius:10px;overflow-wrap:anywhere}.detail-item small{display:block;color:var(--muted);margin-bottom:4px}.detail-item strong{font-weight:650}.detail-overlay{display:none;position:fixed;inset:0;background:#0b1020a8;z-index:30;padding:18px;overflow:auto}.detail-overlay.show{display:block}.detail-box{max-width:850px;margin:4vh auto;background:white;border-radius:16px;padding:22px}.detail-box-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:18px}.detail-box h3{margin:0}
 
 .analysis-section{margin-top:26px;border-top:1px solid var(--line);padding-top:22px}
@@ -41,7 +44,7 @@ footer{text-align:center;padding:24px 16px;color:var(--muted);font-size:.87rem}
 .analysis-note{background:#fffbeb;border:1px solid #fde68a;color:#92400e;border-radius:10px;padding:12px;font-size:.87rem;margin:12px 0}
 @media(max-width:850px){.analysis-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.chart-grid{grid-template-columns:1fr}}
 
-@media(max-width:850px){.layout{grid-template-columns:1fr}.side-card{position:static;order:-1}.side-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.side-stat{border:1px solid var(--line);border-radius:10px;padding:12px}.stats{grid-template-columns:1fr 1fr}.stats .stat-card:last-child{grid-column:1/-1}}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.side-card{display:none!important}.side-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.side-stat{border:1px solid var(--line);border-radius:10px;padding:12px}.stats{grid-template-columns:1fr 1fr}.stats .stat-card:last-child{grid-column:1/-1}}
 @media(max-width:520px){header{padding-bottom:45px}.topline{align-items:flex-start}h1{margin-top:25px}.options{grid-template-columns:1fr}.form-card{padding:17px}.side-card{padding:17px}.stats{grid-template-columns:1fr}.stats .stat-card:last-child{grid-column:auto}.detail-grid{grid-template-columns:1fr}.modal{padding:8px}.modal-content{padding:13px}.modal-head{padding:16px}}
 @media(max-width:600px){
   .actions{display:flex;flex-direction:column;gap:12px}
@@ -52,6 +55,112 @@ footer{text-align:center;padding:24px 16px;color:var(--muted);font-size:.87rem}
   .modal-box{margin:0 auto}
   .modal{padding:8px}
 }
+
+/* Plus 2 Guru About Card */
+.about-guru {
+    margin-top: 24px;
+    padding: 20px 16px;
+    border: 1px solid #e0e7ff;
+    border-radius: 16px;
+    background: linear-gradient(160deg, #ffffff 0%, #f5f7ff 100%);
+    text-align: center;
+    overflow: hidden;
+}
+
+.guru-logo {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 14px;
+    padding: 6px;
+    border-radius: 18px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 5px 18px rgba(49, 46, 129, 0.09);
+}
+
+.guru-logo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+.guru-label {
+    display: inline-block;
+    margin-bottom: 7px;
+    color: #4f46e5;
+    font-size: 0.67rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.about-guru h3 {
+    margin: 0 0 10px;
+    color: #172554;
+    font-size: 1.25rem;
+}
+
+.about-guru > p {
+    margin: 0 0 16px;
+    color: #667085;
+    font-size: 0.88rem;
+    line-height: 1.7;
+}
+
+.guru-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 18px;
+    text-align: left;
+}
+
+.guru-features li {
+    padding: 9px 0;
+    border-bottom: 1px solid #e8ebf5;
+    color: #344054;
+    font-size: 0.86rem;
+}
+
+.guru-features li:last-child {
+    border-bottom: none;
+}
+
+.guru-visit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: linear-gradient(120deg, #312e81, #4f46e5);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 750;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.guru-visit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 18px rgba(79, 70, 229, 0.22);
+}
+
+.guru-credit {
+    margin-top: 15px;
+    padding-top: 13px;
+    border-top: 1px solid #e5e7eb;
+    color: #667085;
+    font-size: 0.78rem;
+    line-height: 1.8;
+}
+
+.guru-credit strong {
+    color: #312e81;
+}
+
+.survey-notice { display: block; color: #f3e3e3; font-weight: 800; font-size: 15px; line-height: 1.8; background: #4056d6; border-left: 4px solid #dc2626; padding: 12px 16px; border-radius: 6px; }
 </style>
 </head>
 <body>
@@ -59,10 +168,12 @@ footer{text-align:center;padding:24px 16px;color:var(--muted);font-size:.87rem}
   <div class="header-inner">
     <div class="topline">
       <div class="brand">📊 Digital Life Survey</div>
-      <button class="admin-open" id="openAdminBtn" type="button">🔐 Admin panel</button>
+      <button class="admin-open" id="openAdminBtn" type="button" aria-label="Open admin panel" title="Admin panel"></button>
     </div>
     <h1>Digital Technology Usage Survey</h1>
-    <p class="subtitle">Help us understand how students use digital devices, the Internet, social media, educational technology, and AI tools. Please choose the answers that best describe your experience.</p>
+    <p class="subtitle">Help us understand how students use digital devices, the Internet, social media, educational technology, and AI tools. Please choose the answers that best describe your experience.<span class="survey-notice"><span style="color: rgb(242, 7, 7); font-weight: bold; font-size: 20px;">Important:</span> As part of <span style="text-decoration: underline; text-decoration-color: red;">
+    our college assignment
+</span> , all students are requested to complete and submit this survey. Your participation and valuable responses will help us successfully complete our academic research project. </span></p>
     <div class="hero-tags"><span class="tag">17 questions</span><span class="tag">Student survey</span><span class="tag">About 4–6 minutes</span></div>
   </div>
 </header>
@@ -71,7 +182,6 @@ footer{text-align:center;padding:24px 16px;color:var(--muted);font-size:.87rem}
   <div class="layout">
     <section class="card form-card">
       <form id="surveyForm">
-        <div id="formNotice" class="notice" role="status" aria-live="polite"></div>
         <h2 class="section-title"><span class="section-number">A</span> General Information</h2>
         <div class="question" data-question="1"><label class="qtitle">1. Which age group do you belong to? <span class="required">*</span></label><div class="options">
           <label class="option"><input type="radio" name="q1" value="Below 15" required>Below 15</label><label class="option"><input type="radio" name="q1" value="15–17">15–17</label><label class="option"><input type="radio" name="q1" value="18–20">18–20</label><label class="option"><input type="radio" name="q1" value="Above 20">Above 20</label>
@@ -135,7 +245,8 @@ footer{text-align:center;padding:24px 16px;color:var(--muted);font-size:.87rem}
           <label class="option"><input type="radio" name="q17" value="Very confident" required>Very confident</label><label class="option"><input type="radio" name="q17" value="Confident">Confident</label><label class="option"><input type="radio" name="q17" value="Somewhat confident">Somewhat confident</label><label class="option"><input type="radio" name="q17" value="Not confident">Not confident</label>
         </div></div>
         <div class="actions"><button class="btn btn-primary" type="submit">Submit survey →</button><button class="btn btn-light" type="reset">Clear answers</button></div>
-        <p class="privacy-note">Please do not enter passwords or other sensitive personal information. Survey responses are submitted to the connected Firebase Realtime Database.</p>
+        <p class="privacy-note"></p>
+        <div id="formNotice" class="notice" role="status" aria-live="polite"></div>
       </form>
     </section>
     <aside class="card side-card">
@@ -146,23 +257,65 @@ footer{text-align:center;padding:24px 16px;color:var(--muted);font-size:.87rem}
         <div class="side-stat"><strong>17</strong><span>Questions</span></div>
         <div class="side-stat"><strong>6</strong><span>Survey sections</span></div>
       </div>
-      <p><b>Important:</b> Your answers are saved when you submit. You can review submitted records in the admin panel on this same browser.</p>
+      <p><b>Important:</b>This website has been designed and developed by Bikesh Kumar Yadav as a digital learning platform for +2 students. Its main goal is to make learning easier, smarter, and more accessible by bringing essential educational resources together in one place.</p>
+    <!-- About Plus 2 Guru -->
+<div class="about-guru">
+    <div class="guru-logo">
+        <img
+            src="favicon1.png.png"
+            alt="Plus 2 Guru Logo"
+            loading="lazy"
+        >
+    </div>
+
+    <span class="guru-label">OUR EDUCATIONAL PLATFORM</span>
+
+    <h3>About Plus 2 Guru</h3>
+
+    <p>
+        Plus 2 Guru is a digital learning platform designed to help
+        Nepal's NEB Class 11 and 12 students access educational
+        resources in one place.
+    </p>
+
+    <ul class="guru-features">
+        <li>📚 Chapter-wise Notes</li>
+        <li>📝 Model Questions & Past Papers</li>
+        <li>🎯 MCQs & Practice Tests</li>
+        <li>💻 Practical Files & Solutions</li>
+         <li>💻 C program & program practice Available</li>
+    </ul>
+
+    <a
+        href="https://www.bikeshyadav11.com.np/"
+        class="guru-visit-btn"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        Visit Plus 2 Guru <span aria-hidden="true">↗</span>
+    </a>
+
+    <div class="guru-credit">
+        Developed and maintained by<br>
+        <strong>Bikesh Kumar Yadav</strong>
+    </div>
+</div>
     </aside>
   </div>
 </main>
 
-<footer>Digital Technology Usage Survey · Student research project</footer>
+<footer><div class="footer-line">All Rights Reserved <span aria-hidden="true">|</span> Digital Technology Usage Survey <span aria-hidden="true">|</span> Designed and Developed by <span class="footer-name">Bikesh Kumar Yadav</span> <span aria-hidden="true">|</span> Student Research Project</div></footer>
 
 <div class="modal" id="adminModal" aria-hidden="true">
  <div class="modal-box">
   <div class="modal-head"><h2>🔐 Survey Admin Panel</h2><button class="close" id="closeAdminBtn" aria-label="Close admin panel">✕</button></div>
   <div class="modal-content">
    <div class="login-box" id="loginBox">
-    <h3>Administrator sign in</h3><p class="hint">Sign in with the administrator account created in Firebase Authentication.</p>
-    <label for="adminEmail">Administrator email</label><input class="field" id="adminEmail" type="email" autocomplete="username" placeholder="admin@example.com" required><label for="adminPassword">Password</label><input class="field" id="adminPassword" type="password" autocomplete="current-password" placeholder="Enter password" required>
+    <h3>owner sign in</h3><p class="hint"></p>
+    <label for="adminEmail">Username</label><input class="field" id="adminEmail" type="email" autocomplete="username" placeholder="Username" required><label for="adminPassword">Password</label><input class="field" id="adminPassword" type="password" autocomplete="current-password" placeholder="Enter password" required>
     <button class="btn btn-primary" id="loginBtn" type="button">Sign in</button>
     <div id="loginError" class="notice error" style="display:none;margin-top:12px">Incorrect password. Try again.</div>
-    <p class="privacy-note">Admin access is verified by Firebase Authentication. Do not share administrator credentials.</p>
+    <p class="privacy-note">Only Admin Access</p>
    </div>
    <div class="admin-dashboard" id="adminDashboard">
     <div class="stats"><div class="stat-card"><span>Total responses</span><strong id="totalCount">0</strong></div><div class="stat-card"><span>Today's responses</span><strong id="todayCount">0</strong></div><div class="stat-card"><span>Latest response</span><strong id="latestDate">—</strong></div></div>
@@ -272,6 +425,8 @@ footer{text-align:center;padding:24px 16px;color:var(--muted);font-size:.87rem}
   const loginBox = document.getElementById("loginBox");
   const dashboard = document.getElementById("adminDashboard");
   const STORAGE_KEY = "digitalTechnologySurveyResponses_v1";
+  // Browser-only duplicate protection: this flag is stored only on this device/browser.
+  const SUBMITTED_KEY = "digitalTechnologySurveySubmitted_v1";
   const RESPONSES_PATH = "surveyResponses";
   let firebaseReady = false;
   let currentUser = null;
@@ -324,10 +479,37 @@ footer{text-align:center;padding:24px 16px;color:var(--muted);font-size:.87rem}
     document.getElementById("progressBar").style.width = `${count / 17 * 100}%`;
   }
   form.addEventListener("change", updateProgress);
-  form.addEventListener("reset", () => setTimeout(() => { updateProgress(); notice.className = "notice"; notice.textContent = ""; }, 0));
+  form.addEventListener("reset", () => setTimeout(() => {
+    updateProgress();
+    if (hasSubmittedOnThisBrowser()) {
+      if (notice.className !== "notice success") showAlreadySubmitted();
+    } else {
+      notice.className = "notice";
+      notice.textContent = "";
+    }
+  }, 0));
+
+  const submitButton = form.querySelector('button[type="submit"], input[type="submit"]');
+  let isSubmitting = false;
+  function showAlreadySubmitted() {
+    notice.className = "notice error";
+    notice.textContent = "You have already submitted a survey response. Only one submission per student is allowed.";
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = "Already submitted ✓";
+      submitButton.setAttribute("aria-disabled", "true");
+    }
+  }
+  function hasSubmittedOnThisBrowser() {
+    try { return localStorage.getItem(SUBMITTED_KEY) === "yes"; }
+    catch (e) { console.warn("Browser storage is unavailable; duplicate protection may not work.", e); return false; }
+  }
+  if (hasSubmittedOnThisBrowser()) showAlreadySubmitted();
 
   form.addEventListener("submit", async event => {
     event.preventDefault();
+    if (hasSubmittedOnThisBrowser()) { showAlreadySubmitted(); return; }
+    if (isSubmitting) return;
     if (!form.reportValidity()) return;
     if (!firebaseReady) {
       notice.className = "notice error";
@@ -340,16 +522,29 @@ footer{text-align:center;padding:24px 16px;color:var(--muted);font-size:.87rem}
       answers[`q${i}`] = selected ? selected.value : "";
     }
     try {
+      isSubmitting = true;
+      if (submitButton) submitButton.disabled = true;
       await responsesRef.push({ submittedAt: new Date().toISOString(), answers });
+      // Mark only after Firebase confirms the write succeeded.
+      try { localStorage.setItem(SUBMITTED_KEY, "yes"); } catch (storageError) {
+        console.warn("Could not save the browser submission flag.", storageError);
+      }
       notice.className = "notice success";
-      notice.textContent = "Thank you! Your survey response has been saved to the shared database.";
+      notice.textContent = "Thank you! Your response has been saved. This browser cannot submit another response.";
       form.reset();
+      showAlreadySubmitted();
+      // Keep the success message visible after applying the submission lock.
+      notice.className = "notice success";
+      notice.textContent = "Thank you! Your response has been saved. This browser cannot submit another response.";
       updateProgress();
       window.scrollTo({top: document.querySelector(".form-card").offsetTop - 20, behavior:"smooth"});
     } catch (err) {
       console.error("Could not submit survey:", err);
       notice.className = "notice error";
       notice.textContent = "Unable to submit the response. Please check your connection and Firebase database rules.";
+      if (submitButton) submitButton.disabled = false;
+    } finally {
+      isSubmitting = false;
     }
   });
 
@@ -688,6 +883,89 @@ footer{text-align:center;padding:24px 16px;color:var(--muted);font-size:.87rem}
   renderCharts();
   renderGeneratedFindings();
 })();
+
+
+
+
+
+
+
+
+
+  /* ================================
+           WEBSITE RIGHT-CLICK PROTECTION
+           ================================ */
+
+        // Disable the browser's webpage right-click context menu.
+        document.addEventListener('contextmenu', function (event) {
+            event.preventDefault();
+            return false;
+        });
+
+        // Disable common browser/dev-tool shortcuts on the webpage.
+        document.addEventListener('keydown', function (event) {
+            const key = event.key.toLowerCase();
+
+            // F12
+            if (event.key === 'F12') {
+                event.preventDefault();
+                return false;
+            }
+
+            // Ctrl + Shift + I / J / C
+            if (event.ctrlKey && event.shiftKey && ['i', 'j', 'c'].includes(key)) {
+                event.preventDefault();
+                return false;
+            }
+
+            // Ctrl + U (View Source)
+            if (event.ctrlKey && key === 'u') {
+                event.preventDefault();
+                return false;
+            }
+
+            // Ctrl + S (Save Page)
+            if (event.ctrlKey && key === 's') {
+                event.preventDefault();
+                return false;
+            }
+
+            // Ctrl + P (Print)
+            if (event.ctrlKey && key === 'p') {
+                event.preventDefault();
+                return false;
+            }
+        });
+
+        // Disable text selection and dragging where possible.
+        document.addEventListener('dragstart', function (event) {
+            event.preventDefault();
+        });
+
+        // Disable selecting page text with the mouse.
+        document.addEventListener('selectstart', function (event) {
+            event.preventDefault();
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </script>
 </body>
 </html>
