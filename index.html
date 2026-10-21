@@ -277,7 +277,7 @@ footer{text-align:center;padding:24px 16px;color:var(--muted);font-size:.87rem}
   }, error => {
     console.error("Firebase response listener:", error);
     notice.className = "notice error";
-    notice.textContent = "Could not load survey data from Firebase. Check your database rules and configuration.";
+    notice.textContent = "";
   });
   function readRecords() { return Array.isArray(currentRecords) ? currentRecords : []; }
   async function writeRecords(records) {
