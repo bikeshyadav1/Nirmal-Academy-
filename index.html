@@ -43,6 +43,15 @@ footer{text-align:center;padding:24px 16px;color:var(--muted);font-size:.87rem}
 
 @media(max-width:850px){.layout{grid-template-columns:1fr}.side-card{position:static;order:-1}.side-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.side-stat{border:1px solid var(--line);border-radius:10px;padding:12px}.stats{grid-template-columns:1fr 1fr}.stats .stat-card:last-child{grid-column:1/-1}}
 @media(max-width:520px){header{padding-bottom:45px}.topline{align-items:flex-start}h1{margin-top:25px}.options{grid-template-columns:1fr}.form-card{padding:17px}.side-card{padding:17px}.stats{grid-template-columns:1fr}.stats .stat-card:last-child{grid-column:auto}.detail-grid{grid-template-columns:1fr}.modal{padding:8px}.modal-content{padding:13px}.modal-head{padding:16px}}
+@media(max-width:600px){
+  .actions{display:flex;flex-direction:column;gap:12px}
+  .actions .btn{width:100%;min-height:48px;touch-action:manipulation}
+  .option{min-height:48px;align-items:center}
+  .option input{width:20px;height:20px;margin-top:0}
+  .form-card,.side-card{min-width:0}
+  .modal-box{margin:0 auto}
+  .modal{padding:8px}
+}
 </style>
 </head>
 <body>
@@ -268,6 +277,9 @@ footer{text-align:center;padding:24px 16px;color:var(--muted);font-size:.87rem}
   let currentUser = null;
   let currentRecords = [];
   const responsesRef = window.surveyDb.ref(RESPONSES_PATH);
+  // Do not block mobile submissions while the initial realtime read is still loading.
+  // The write itself is awaited and reports any database/rules error to the user.
+  firebaseReady = true;
   responsesRef.on("value", snapshot => {
     const data = snapshot.val() || {};
     currentRecords = Object.entries(data).map(([id, record]) => ({ ...record, id }));
@@ -275,7 +287,13 @@ footer{text-align:center;padding:24px 16px;color:var(--muted);font-size:.87rem}
     firebaseReady = true;
     if (dashboard.style.display === "block") renderRecords();
   }, error => {
-    
+    console.error("Realtime Database listener failed:", error);
+    // Keep submission enabled: writes will independently succeed or show their own error.
+    const status = document.getElementById("formNotice");
+    if (status && !status.classList.contains("success")) {
+      status.className = "notice error";
+      status.textContent = "Could not load live survey data. You may still submit; if saving fails, check Firebase Database URL and Rules.";
+    }
   });
   function readRecords() { return Array.isArray(currentRecords) ? currentRecords : []; }
   async function writeRecords(records) {
