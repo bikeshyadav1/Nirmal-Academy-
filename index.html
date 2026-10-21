@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Technology Usage Survey</title>
+<style>
+:root{--primary:#4f46e5;--primary-dark:#3730a3;--ink:#172033;--muted:#667085;--line:#e5e7eb;--bg:#f5f7fb;--card:#fff;--green:#0f9f6e;--red:#dc2626}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+header{background:linear-gradient(120deg,#312e81,#4f46e5 55%,#0891b2);color:white;padding:34px 18px 54px}
+.header-inner{max-width:1050px;margin:auto}.topline{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.brand{font-weight:800;letter-spacing:.2px;font-size:1.05rem}.admin-open{border:1px solid #ffffff80;background:#ffffff18;color:white;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:700}.admin-open:hover{background:#ffffff2c}
+h1{font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.12;margin:32px 0 12px;max-width:760px}.subtitle{max-width:720px;color:#e0e7ff;margin:0}.hero-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}.tag{font-size:.82rem;border-radius:999px;background:#ffffff20;border:1px solid #ffffff30;padding:6px 11px}
+main{max-width:1050px;margin:-28px auto 50px;padding:0 16px}.layout{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:20px;align-items:start}.card{background:var(--card);border:1px solid #e8ebf2;border-radius:18px;box-shadow:0 10px 30px #1b24500b}.form-card{padding:clamp(18px,3vw,30px)}.side-card{padding:22px;position:sticky;top:18px}.section-title{margin:28px 0 15px;padding-bottom:10px;border-bottom:1px solid var(--line);font-size:1.12rem;display:flex;align-items:center;gap:10px}.section-title:first-child{margin-top:0}.section-number{width:29px;height:29px;display:inline-grid;place-items:center;border-radius:9px;background:#eef2ff;color:var(--primary);font-weight:800;font-size:.9rem}
+.question{margin:0 0 23px}.question label.qtitle{display:block;font-weight:700;margin-bottom:10px}.required{color:var(--red)}.options{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:9px}.option{display:flex;align-items:flex-start;gap:9px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;cursor:pointer;transition:.15s;background:#fff;font-size:.94rem}.option:hover{border-color:#a5b4fc;background:#fafaff}.option:has(input:checked){border-color:var(--primary);background:#eef2ff}.option input{accent-color:var(--primary);margin-top:4px;flex:0 0 auto}
+.field{width:100%;padding:12px 13px;border:1px solid #d0d5dd;border-radius:10px;font:inherit;background:white;color:var(--ink)}.field:focus{outline:3px solid #c7d2fe;border-color:var(--primary)}.hint{font-size:.84rem;color:var(--muted);margin:7px 0 0}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:25px}.btn{border:0;border-radius:10px;padding:12px 17px;font:inherit;font-weight:750;cursor:pointer;transition:.15s}.btn-primary{background:var(--primary);color:white}.btn-primary:hover{background:var(--primary-dark)}.btn-light{background:#eef2f7;color:#344054}.btn-danger{background:#fee2e2;color:#991b1b}.btn-small{padding:8px 11px;font-size:.87rem}.notice{display:none;padding:13px 15px;border-radius:10px;margin:15px 0}.notice.success{display:block;background:#dcfce7;color:#166534}.notice.error{display:block;background:#fee2e2;color:#991b1b}.side-card h3{margin:0 0 9px}.side-card p{font-size:.92rem;color:var(--muted)}.progress-track{height:8px;background:#eef2f7;border-radius:99px;overflow:hidden;margin:12px 0}.progress-bar{height:100%;width:0;background:linear-gradient(90deg,#4f46e5,#06b6d4);transition:width .2s}.side-stat{padding:13px 0;border-top:1px solid var(--line)}.side-stat strong{display:block;font-size:1.3rem}.side-stat span{color:var(--muted);font-size:.85rem}
+footer{text-align:center;padding:24px 16px;color:var(--muted);font-size:.87rem}
+.modal{display:none;position:fixed;inset:0;background:#0b1020b8;z-index:20;padding:18px;overflow:auto}.modal.show{display:block}.modal-box{max-width:1150px;margin:3vh auto;background:white;border-radius:18px;box-shadow:0 25px 80px #0003;overflow:hidden}.modal-head{padding:20px 24px;background:#111827;color:white;display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}.modal-head h2{margin:0;font-size:1.35rem}.close{border:0;background:#ffffff20;color:white;border-radius:8px;padding:8px 12px;font-size:1.1rem;cursor:pointer}.modal-content{padding:22px}.login-box{max-width:440px;margin:25px auto 35px}.login-box h3{margin-top:0}.login-box .field{margin:7px 0 12px}.admin-dashboard{display:none}.admin-toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}.admin-toolbar .field{flex:1;min-width:180px}.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:18px}.stat-card{border:1px solid var(--line);border-radius:12px;padding:15px}.stat-card span{display:block;color:var(--muted);font-size:.84rem}.stat-card strong{font-size:1.55rem}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px}table{width:100%;border-collapse:collapse;min-width:720px;font-size:.9rem}th,td{text-align:left;padding:12px;border-bottom:1px solid var(--line);vertical-align:top}th{background:#f8fafc;font-size:.8rem;text-transform:uppercase;letter-spacing:.04em;color:#475467}tr:last-child td{border-bottom:0}.table-actions{display:flex;gap:6px}.empty{text-align:center;padding:35px;color:var(--muted)}.privacy-note{font-size:.83rem;color:var(--muted);margin-top:14px}.detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.detail-item{padding:12px;border:1px solid var(--line);border-radius:10px;overflow-wrap:anywhere}.detail-item small{display:block;color:var(--muted);margin-bottom:4px}.detail-item strong{font-weight:650}.detail-overlay{display:none;position:fixed;inset:0;background:#0b1020a8;z-index:30;padding:18px;overflow:auto}.detail-overlay.show{display:block}.detail-box{max-width:850px;margin:4vh auto;background:white;border-radius:16px;padding:22px}.detail-box-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:18px}.detail-box h3{margin:0}
+
+.analysis-section{margin-top:26px;border-top:1px solid var(--line);padding-top:22px}
+.analysis-section h3{margin:0 0 6px;font-size:1.2rem}
+.analysis-intro{margin:0 0 16px;color:var(--muted);font-size:.92rem}
+.analysis-controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:12px 0 18px}
+.analysis-controls label{font-size:.88rem;font-weight:700}
+.analysis-controls select{max-width:100%;width:auto;min-width:220px}
+.analysis-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:15px 0}
+.analysis-metric{padding:14px;border:1px solid var(--line);border-radius:12px;background:#fafbff}
+.analysis-metric span{display:block;color:var(--muted);font-size:.8rem}
+.analysis-metric strong{display:block;font-size:1.35rem;margin-top:3px;overflow-wrap:anywhere}
+.analysis-table{min-width:450px}
+.analysis-table td:last-child,.analysis-table th:last-child{text-align:right}
+.mini-bar{height:8px;background:#eef2ff;border-radius:99px;overflow:hidden;min-width:75px;margin-top:5px}
+.mini-bar span{display:block;height:100%;background:linear-gradient(90deg,#4f46e5,#06b6d4)}
+.chart-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:15px}
+.chart-card{border:1px solid var(--line);border-radius:13px;padding:14px;min-width:0}
+.chart-card h4{margin:0 0 4px;font-size:.98rem}
+.chart-card p{margin:0;color:var(--muted);font-size:.8rem}
+.chart-card canvas{display:block;width:100%;height:260px;margin-top:8px}
+.findings-list{padding-left:24px}
+.findings-list li{margin:0 0 10px}
+.findings-list li input{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px;font:inherit;margin-top:5px}
+.analysis-note{background:#fffbeb;border:1px solid #fde68a;color:#92400e;border-radius:10px;padding:12px;font-size:.87rem;margin:12px 0}
+@media(max-width:850px){.analysis-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.chart-grid{grid-template-columns:1fr}}
+
+@media(max-width:850px){.layout{grid-template-columns:1fr}.side-card{position:static;order:-1}.side-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.side-stat{border:1px solid var(--line);border-radius:10px;padding:12px}.stats{grid-template-columns:1fr 1fr}.stats .stat-card:last-child{grid-column:1/-1}}
+@media(max-width:520px){header{padding-bottom:45px}.topline{align-items:flex-start}h1{margin-top:25px}.options{grid-template-columns:1fr}.form-card{padding:17px}.side-card{padding:17px}.stats{grid-template-columns:1fr}.stats .stat-card:last-child{grid-column:auto}.detail-grid{grid-template-columns:1fr}.modal{padding:8px}.modal-content{padding:13px}.modal-head{padding:16px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="topline">
+      <div class="brand">📊 Digital Life Survey</div>
+      <button class="admin-open" id="openAdminBtn" type="button">🔐 Admin panel</button>
+    </div>
+    <h1>Digital Technology Usage Survey</h1>
+    <p class="subtitle">Help us understand how students use digital devices, the Internet, social media, educational technology, and AI tools. Please choose the answers that best describe your experience.</p>
+    <div class="hero-tags"><span class="tag">17 questions</span><span class="tag">Student survey</span><span class="tag">About 4–6 minutes</span></div>
+  </div>
+</header>
+
+<main>
+  <div class="layout">
+    <section class="card form-card">
+      <form id="surveyForm">
+        <div id="formNotice" class="notice" role="status" aria-live="polite"></div>
+        <h2 class="section-title"><span class="section-number">A</span> General Information</h2>
+        <div class="question" data-question="1"><label class="qtitle">1. Which age group do you belong to? <span class="required">*</span></label><div class="options">
+          <label class="option"><input type="radio" name="q1" value="Below 15" required>Below 15</label><label class="option"><input type="radio" name="q1" value="15–17">15–17</label><label class="option"><input type="radio" name="q1" value="18–20">18–20</label><label class="option"><input type="radio" name="q1" value="Above 20">Above 20</label>
+        </div></div>
+        <div class="question" data-question="2"><label class="qtitle">2. What device do you use most frequently? <span class="required">*</span></label><div class="options">
+          <label class="option"><input type="radio" name="q2" value="Smartphone" required>Smartphone</label><label class="option"><input type="radio" name="q2" value="Laptop">Laptop</label><label class="option"><input type="radio" name="q2" value="Desktop computer">Desktop computer</label><label class="option"><input type="radio" name="q2" value="Tablet">Tablet</label><label class="option"><input type="radio" name="q2" value="Other">Other</label>
+        </div></div>
+
+        <h2 class="section-title"><span class="section-number">B</span> Internet and Screen Usage</h2>
+        <div class="question" data-question="3"><label class="qtitle">3. Approximately how many hours do you spend using digital devices each day? <span class="required">*</span></label><div class="options">
+          <label class="option"><input type="radio" name="q3" value="Less than 2 hours" required>Less than 2 hours</label><label class="option"><input type="radio" name="q3" value="2–4 hours">2–4 hours</label><label class="option"><input type="radio" name="q3" value="4–6 hours">4–6 hours</label><label class="option"><input type="radio" name="q3" value="More than 6 hours">More than 6 hours</label>
+        </div></div>
+        <div class="question" data-question="4"><label class="qtitle">4. How many hours do you spend on the Internet each day? <span class="required">*</span></label><div class="options">
+          <label class="option"><input type="radio" name="q4" value="Less than 1 hour" required>Less than 1 hour</label><label class="option"><input type="radio" name="q4" value="1–3 hours">1–3 hours</label><label class="option"><input type="radio" name="q4" value="3–5 hours">3–5 hours</label><label class="option"><input type="radio" name="q4" value="More than 5 hours">More than 5 hours</label>
+        </div></div>
+        <div class="question" data-question="5"><label class="qtitle">5. At what time do you use digital devices most? <span class="required">*</span></label><div class="options">
+          <label class="option"><input type="radio" name="q5" value="Morning" required>Morning</label><label class="option"><input type="radio" name="q5" value="Afternoon">Afternoon</label><label class="option"><input type="radio" name="q5" value="Evening">Evening</label><label class="option"><input type="radio" name="q5" value="Late night">Late night</label>
+        </div></div>
+
+        <h2 class="section-title"><span class="section-number">C</span> Purpose of Digital Technology</h2>
+        <div class="question" data-question="6"><label class="qtitle">6. What is your main purpose for using the Internet? <span class="required">*</span></label><div class="options">
+          <label class="option"><input type="radio" name="q6" value="Study/education" required>Study / education</label><label class="option"><input type="radio" name="q6" value="Social media">Social media</label><label class="option"><input type="radio" name="q6" value="Entertainment">Entertainment</label><label class="option"><input type="radio" name="q6" value="Gaming">Gaming</label><label class="option"><input type="radio" name="q6" value="Communication">Communication</label><label class="option"><input type="radio" name="q6" value="News/information">News / information</label><label class="option"><input type="radio" name="q6" value="Other">Other</label>
+        </div></div>
+        <div class="question" data-question="7"><label class="qtitle">7. How frequently do you use the Internet for educational purposes? <span class="required">*</span></label><div class="options">
+          <label class="option"><input type="radio" name="q7" value="Daily" required>Daily</label><label class="option"><input type="radio" name="q7" value="Several times a week">Several times a week</label><label class="option"><input type="radio" name="q7" value="Occasionally">Occasionally</label><label class="option"><input type="radio" name="q7" value="Rarely">Rarely</label><label class="option"><input type="radio" name="q7" value="Never">Never</label>
+        </div></div>
+        <div class="question" data-question="8"><label class="qtitle">8. Which digital learning resources do you use most? <span class="required">*</span></label><div class="options">
+          <label class="option"><input type="radio" name="q8" value="YouTube" required>YouTube</label><label class="option"><input type="radio" name="q8" value="Google/Search engines">Google / search engines</label><label class="option"><input type="radio" name="q8" value="Online learning platforms">Online learning platforms</label><label class="option"><input type="radio" name="q8" value="AI tools">AI tools</label><label class="option"><input type="radio" name="q8" value="Educational websites">Educational websites</label><label class="option"><input type="radio" name="q8" value="E-books/PDFs">E-books / PDFs</label><label class="option"><input type="radio" name="q8" value="Other">Other</label>
+        </div></div>
+
+        <h2 class="section-title"><span class="section-number">D</span> Social Media and Entertainment</h2>
+        <div class="question" data-question="9"><label class="qtitle">9. Which social media platform do you use most frequently? <span class="required">*</span></label><div class="options">
+          <label class="option"><input type="radio" name="q9" value="Facebook" required>Facebook</label><label class="option"><input type="radio" name="q9" value="Instagram">Instagram</label><label class="option"><input type="radio" name="q9" value="TikTok">TikTok</label><label class="option"><input type="radio" name="q9" value="YouTube">YouTube</label><label class="option"><input type="radio" name="q9" value="Snapchat">Snapchat</label><label class="option"><input type="radio" name="q9" value="Other">Other</label>
+        </div></div>
+        <div class="question" data-question="10"><label class="qtitle">10. Approximately how much time do you spend on social media each day? <span class="required">*</span></label><div class="options">
+          <label class="option"><input type="radio" name="q10" value="Less than 1 hour" required>Less than 1 hour</label><label class="option"><input type="radio" name="q10" value="1–2 hours">1–2 hours</label><label class="option"><input type="radio" name="q10" value="2–4 hours">2–4 hours</label><label class="option"><input type="radio" name="q10" value="More than 4 hours">More than 4 hours</label>
+        </div></div>
+        <div class="question" data-question="11"><label class="qtitle">11. How much time do you spend playing digital games? <span class="required">*</span></label><div class="options">
+          <label class="option"><input type="radio" name="q11" value="I don't play games" required>I don't play games</label><label class="option"><input type="radio" name="q11" value="Less than 1 hour/day">Less than 1 hour/day</label><label class="option"><input type="radio" name="q11" value="1–2 hours/day">1–2 hours/day</label><label class="option"><input type="radio" name="q11" value="More than 2 hours/day">More than 2 hours/day</label>
+        </div></div>
+
+        <h2 class="section-title"><span class="section-number">E</span> Digital Learning and AI</h2>
+        <div class="question" data-question="12"><label class="qtitle">12. Do you use AI tools such as ChatGPT, Gemini, Copilot, etc.? <span class="required">*</span></label><div class="options">
+          <label class="option"><input type="radio" name="q12" value="Frequently" required>Frequently</label><label class="option"><input type="radio" name="q12" value="Sometimes">Sometimes</label><label class="option"><input type="radio" name="q12" value="Rarely">Rarely</label><label class="option"><input type="radio" name="q12" value="Never">Never</label>
+        </div></div>
+        <div class="question" data-question="13"><label class="qtitle">13. What do you mainly use AI tools for? <span class="required">*</span></label><div class="options">
+          <label class="option"><input type="radio" name="q13" value="Understanding lessons" required>Understanding lessons</label><label class="option"><input type="radio" name="q13" value="Homework/assignments">Homework / assignments</label><label class="option"><input type="radio" name="q13" value="Programming">Programming</label><label class="option"><input type="radio" name="q13" value="Writing">Writing</label><label class="option"><input type="radio" name="q13" value="Information search">Information search</label><label class="option"><input type="radio" name="q13" value="Creative work">Creative work</label><label class="option"><input type="radio" name="q13" value="Other">Other</label><label class="option"><input type="radio" name="q13" value="I don't use AI">I don't use AI</label>
+        </div></div>
+        <div class="question" data-question="14"><label class="qtitle">14. Do digital technologies help you in your studies? <span class="required">*</span></label><div class="options">
+          <label class="option"><input type="radio" name="q14" value="A lot" required>A lot</label><label class="option"><input type="radio" name="q14" value="Somewhat">Somewhat</label><label class="option"><input type="radio" name="q14" value="Very little">Very little</label><label class="option"><input type="radio" name="q14" value="Not at all">Not at all</label>
+        </div></div>
+
+        <h2 class="section-title"><span class="section-number">F</span> Digital Well-being and Safety</h2>
+        <div class="question" data-question="15"><label class="qtitle">15. Do you think you spend too much time using digital devices? <span class="required">*</span></label><div class="options">
+          <label class="option"><input type="radio" name="q15" value="Yes" required>Yes</label><label class="option"><input type="radio" name="q15" value="No">No</label><label class="option"><input type="radio" name="q15" value="Not sure">Not sure</label>
+        </div></div>
+        <div class="question" data-question="16"><label class="qtitle">16. Does excessive screen time affect your sleep or concentration? <span class="required">*</span></label><div class="options">
+          <label class="option"><input type="radio" name="q16" value="Frequently" required>Frequently</label><label class="option"><input type="radio" name="q16" value="Sometimes">Sometimes</label><label class="option"><input type="radio" name="q16" value="Rarely">Rarely</label><label class="option"><input type="radio" name="q16" value="Never">Never</label><label class="option"><input type="radio" name="q16" value="Not sure">Not sure</label>
+        </div></div>
+        <div class="question" data-question="17"><label class="qtitle">17. How confident are you about protecting yourself from online threats? <span class="required">*</span></label><div class="options">
+          <label class="option"><input type="radio" name="q17" value="Very confident" required>Very confident</label><label class="option"><input type="radio" name="q17" value="Confident">Confident</label><label class="option"><input type="radio" name="q17" value="Somewhat confident">Somewhat confident</label><label class="option"><input type="radio" name="q17" value="Not confident">Not confident</label>
+        </div></div>
+        <div class="actions"><button class="btn btn-primary" type="submit">Submit survey →</button><button class="btn btn-light" type="reset">Clear answers</button></div>
+        <p class="privacy-note">Please do not enter passwords or other sensitive personal information. Survey responses are submitted to the connected Firebase Realtime Database.</p>
+      </form>
+    </section>
+    <aside class="card side-card">
+      <h3>Your survey</h3><p>Answer all 17 questions. Your progress updates as you complete each one.</p>
+      <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+      <strong id="progressText">0 of 17 answered</strong>
+      <div class="side-stats">
+        <div class="side-stat"><strong>17</strong><span>Questions</span></div>
+        <div class="side-stat"><strong>6</strong><span>Survey sections</span></div>
+      </div>
+      <p><b>Important:</b> Your answers are saved when you submit. You can review submitted records in the admin panel on this same browser.</p>
+    </aside>
+  </div>
+</main>
+
+<footer>Digital Technology Usage Survey · Student research project</footer>
+
+<div class="modal" id="adminModal" aria-hidden="true">
+ <div class="modal-box">
+  <div class="modal-head"><h2>🔐 Survey Admin Panel</h2><button class="close" id="closeAdminBtn" aria-label="Close admin panel">✕</button></div>
+  <div class="modal-content">
+   <div class="login-box" id="loginBox">
+    <h3>Administrator sign in</h3><p class="hint">Sign in with the administrator account created in Firebase Authentication.</p>
+    <label for="adminEmail">Administrator email</label><input class="field" id="adminEmail" type="email" autocomplete="username" placeholder="admin@example.com" required><label for="adminPassword">Password</label><input class="field" id="adminPassword" type="password" autocomplete="current-password" placeholder="Enter password" required>
+    <button class="btn btn-primary" id="loginBtn" type="button">Sign in</button>
+    <div id="loginError" class="notice error" style="display:none;margin-top:12px">Incorrect password. Try again.</div>
+    <p class="privacy-note">Admin access is verified by Firebase Authentication. Do not share administrator credentials.</p>
+   </div>
+   <div class="admin-dashboard" id="adminDashboard">
+    <div class="stats"><div class="stat-card"><span>Total responses</span><strong id="totalCount">0</strong></div><div class="stat-card"><span>Today's responses</span><strong id="todayCount">0</strong></div><div class="stat-card"><span>Latest response</span><strong id="latestDate">—</strong></div></div>
+    <div class="admin-toolbar"><input class="field" id="searchRecords" placeholder="Search responses or answers…"><button class="btn btn-light" id="exportBtn" type="button">Export CSV</button><button class="btn btn-light" id="refreshBtn" type="button">Refresh</button><button class="btn btn-danger" id="clearAllBtn" type="button">Delete all</button></div>
+    <div class="table-wrap"><table><thead><tr><th>#</th><th>Submitted</th><th>Age group</th><th>Main device</th><th>Main Internet use</th><th>Actions</th></tr></thead><tbody id="recordsBody"></tbody></table><div class="empty" id="emptyRecords">No survey responses have been submitted on this browser yet.</div></div>
+
+    <section class="analysis-section" id="dataAnalysis">
+      <h3>📊 Data Analysis</h3>
+      <p class="analysis-intro">Automatically calculate respondent totals, frequencies, percentages, highest frequency, and lowest frequency from the responses currently stored in this browser.</p>
+      <div class="analysis-controls">
+        <label for="analysisQuestion">Analyze question:</label>
+        <select class="field" id="analysisQuestion">
+          <option value="q2">Most-used digital device (Q2)</option>
+          <option value="q6">Main purpose of Internet use (Q6)</option>
+          <option value="q4">Daily Internet usage (Q4)</option>
+          <option value="q12">AI tool usage (Q12)</option>
+          <option value="q1">Age group (Q1)</option>
+          <option value="q3">Daily digital-device usage (Q3)</option>
+          <option value="q5">Most-used time of day (Q5)</option>
+          <option value="q7">Educational Internet use frequency (Q7)</option>
+          <option value="q8">Digital learning resource (Q8)</option>
+          <option value="q9">Most-used social media (Q9)</option>
+          <option value="q10">Daily social media time (Q10)</option>
+          <option value="q11">Daily gaming time (Q11)</option>
+          <option value="q13">Main AI use (Q13)</option>
+          <option value="q14">Digital technology helps studies (Q14)</option>
+          <option value="q15">Too much device time (Q15)</option>
+          <option value="q16">Screen time effect (Q16)</option>
+          <option value="q17">Online safety confidence (Q17)</option>
+        </select>
+        <button class="btn btn-light" id="refreshAnalysisBtn" type="button">Update analysis</button>
+        <button class="btn btn-light" id="downloadAnalysisBtn" type="button">Download analysis CSV</button>
+      </div>
+      <div class="analysis-metrics">
+        <div class="analysis-metric"><span>Total respondents</span><strong id="analysisTotal">0</strong></div>
+        <div class="analysis-metric"><span>Highest frequency</span><strong id="analysisHighest">—</strong></div>
+        <div class="analysis-metric"><span>Lowest frequency</span><strong id="analysisLowest">—</strong></div>
+        <div class="analysis-metric"><span>Most common answer</span><strong id="analysisTop">—</strong></div>
+      </div>
+      <div class="table-wrap">
+        <table class="analysis-table"><thead><tr><th>Answer option</th><th>Frequency</th><th>Percentage</th><th>Distribution</th></tr></thead><tbody id="analysisTableBody"></tbody></table>
+        <div class="empty" id="analysisEmpty">Submit some responses to see the data analysis.</div>
+      </div>
+      <div class="analysis-note">Percentages use the number of respondents who answered the selected question as the denominator. Charts and findings are calculated from actual saved responses; no example data is added.</div>
+
+      <h3 style="margin-top:26px">📈 Charts and Graphs</h3>
+      <p class="analysis-intro">Four charts update from your collected survey data. Use the question selector above to change the analysis table; the four charts show the required key questions.</p>
+      <div class="chart-grid">
+        <div class="chart-card"><h4>1. Most-used digital device</h4><p>Pie chart · Q2</p><canvas id="deviceChart" role="img" aria-label="Pie chart showing most-used digital devices"></canvas></div>
+        <div class="chart-card"><h4>2. Main purpose of Internet use</h4><p>Bar chart · Q6</p><canvas id="purposeChart" role="img" aria-label="Bar chart showing main Internet purpose"></canvas></div>
+        <div class="chart-card"><h4>3. Daily Internet usage</h4><p>Column chart · Q4</p><canvas id="internetChart" role="img" aria-label="Column chart showing daily Internet usage"></canvas></div>
+        <div class="chart-card"><h4>4. AI tool usage among students</h4><p>Pie chart · Q12</p><canvas id="aiChart" role="img" aria-label="Pie chart showing AI tool usage"></canvas></div>
+      </div>
+
+      <h3 style="margin-top:26px">📝 Findings (based on actual data)</h3>
+      <p class="analysis-intro">These findings are generated from the saved responses. They will become meaningful once students have submitted their surveys.</p>
+      <ol class="findings-list" id="generatedFindings"><li>Submit responses to generate findings.</li></ol>
+      <h3 style="margin-top:26px">Your written findings</h3>
+      <p class="analysis-intro">Write or edit at least seven findings based on the actual results. These notes stay in this browser.</p>
+      <div id="customFindingsEditor"></div>
+      <div class="actions"><button class="btn btn-primary" id="saveFindingsBtn" type="button">Save written findings</button><button class="btn btn-light" id="exportFindingsBtn" type="button">Download findings TXT</button></div>
+      <div id="findingsNotice" class="notice" role="status"></div>
+    </section>
+    <p class="privacy-note">Responses are stored in Firebase Realtime Database and can be viewed by authenticated administrators across devices.</p>
+    <div class="actions"><button class="btn btn-light" id="logoutBtn" type="button">Sign out</button></div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<div class="detail-overlay" id="detailOverlay">
+ <div class="detail-box"><div class="detail-box-head"><h3 id="detailTitle">Response details</h3><button class="btn btn-light btn-small" id="closeDetailBtn" type="button">Close ✕</button></div><div id="detailContent" class="detail-grid"></div></div>
+</div>
+<!-- Firebase SDK (compat) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+<script>
+  // Replace these values with your Firebase project's Web App configuration.
+  const firebaseConfig = {
+  apiKey: "AIzaSyAJVToOmwajSZAkjmGjgbfTtL8LrKa7dSs",
+  authDomain: "digital-survey-form.firebaseapp.com",
+  projectId: "digital-survey-form",
+  storageBucket: "digital-survey-form.firebasestorage.app",
+  messagingSenderId: "137903746714",
+  appId: "1:137903746714:web:6e8b2ac12fba1a3fe2b923"
+};
+  firebase.initializeApp(firebaseConfig);
+  window.surveyAuth = firebase.auth();
+  window.surveyDb = firebase.database();
+</script>
+
+<script>
+(() => {
+  // DEMO ONLY: this password is visible in the page source. Use real server-side authentication for a public site.
+  const questionLabels = {
+    q1:"Age group", q2:"Most frequently used device", q3:"Daily digital-device usage", q4:"Daily Internet usage",
+    q5:"Most-used time of day", q6:"Main purpose for using the Internet", q7:"Frequency of educational Internet use",
+    q8:"Most-used digital learning resource", q9:"Most-used social media platform", q10:"Daily social media time",
+    q11:"Daily digital gaming time", q12:"AI tool usage frequency", q13:"Main AI use", q14:"Do digital technologies help with studies?",
+    q15:"Do you spend too much time on digital devices?", q16:"Effect of screen time on sleep or concentration",
+    q17:"Confidence protecting yourself from online threats"
+  };
+  const form = document.getElementById("surveyForm");
+  const notice = document.getElementById("formNotice");
+  const adminModal = document.getElementById("adminModal");
+  const loginBox = document.getElementById("loginBox");
+  const dashboard = document.getElementById("adminDashboard");
+  const STORAGE_KEY = "digitalTechnologySurveyResponses_v1";
+  const RESPONSES_PATH = "surveyResponses";
+  let firebaseReady = false;
+  let currentUser = null;
+  let currentRecords = [];
+  const responsesRef = window.surveyDb.ref(RESPONSES_PATH);
+  responsesRef.on("value", snapshot => {
+    const data = snapshot.val() || {};
+    currentRecords = Object.entries(data).map(([id, record]) => ({ ...record, id }));
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(currentRecords)); } catch (e) {}
+    firebaseReady = true;
+    if (dashboard.style.display === "block") renderRecords();
+  }, error => {
+    console.error("Firebase response listener:", error);
+    notice.className = "notice error";
+    notice.textContent = "Could not load survey data from Firebase. Check your database rules and configuration.";
+  });
+  function readRecords() { return Array.isArray(currentRecords) ? currentRecords : []; }
+  async function writeRecords(records) {
+    const payload = {};
+    records.forEach(record => { if (record && record.id) { const { id, ...data } = record; payload[id] = data; } });
+    await responsesRef.set(payload);
+  }
+  function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+  }
+  function answeredCount() {
+    let count = 0;
+    for (let i = 1; i <= 17; i++) if (form.querySelector(`input[name="q${i}"]:checked`)) count++;
+    return count;
+  }
+  function updateProgress() {
+    const count = answeredCount();
+    document.getElementById("progressText").textContent = `${count} of 17 answered`;
+    document.getElementById("progressBar").style.width = `${count / 17 * 100}%`;
+  }
+  form.addEventListener("change", updateProgress);
+  form.addEventListener("reset", () => setTimeout(() => { updateProgress(); notice.className = "notice"; notice.textContent = ""; }, 0));
+
+  form.addEventListener("submit", async event => {
+    event.preventDefault();
+    if (!form.reportValidity()) return;
+    if (!firebaseReady) {
+      notice.className = "notice error";
+      notice.textContent = "Connecting to the survey database. Please wait a moment and try again.";
+      return;
+    }
+    const answers = {};
+    for (let i = 1; i <= 17; i++) {
+      const selected = form.querySelector(`input[name="q${i}"]:checked`);
+      answers[`q${i}`] = selected ? selected.value : "";
+    }
+    try {
+      await responsesRef.push({ submittedAt: new Date().toISOString(), answers });
+      notice.className = "notice success";
+      notice.textContent = "Thank you! Your survey response has been saved to the shared database.";
+      form.reset();
+      updateProgress();
+      window.scrollTo({top: document.querySelector(".form-card").offsetTop - 20, behavior:"smooth"});
+    } catch (err) {
+      console.error("Could not submit survey:", err);
+      notice.className = "notice error";
+      notice.textContent = "Unable to submit the response. Please check your connection and Firebase database rules.";
+    }
+  });
+
+  function openAdmin() {
+    adminModal.classList.add("show");
+    adminModal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+    document.getElementById("adminEmail").value = "";
+    document.getElementById("adminPassword").value = "";
+    document.getElementById("loginError").style.display = "none";
+    loginBox.style.display = "block";
+    dashboard.style.display = "none";
+    setTimeout(() => document.getElementById("adminPassword").focus(), 50);
+  }
+  function closeAdmin() {
+    adminModal.classList.remove("show");
+    adminModal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+  document.getElementById("openAdminBtn").addEventListener("click", openAdmin);
+  document.getElementById("closeAdminBtn").addEventListener("click", closeAdmin);
+  adminModal.addEventListener("click", e => { if (e.target === adminModal) closeAdmin(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") { closeAdmin(); closeDetail(); } });
+
+  async function login() {
+    const email = document.getElementById("adminEmail").value.trim();
+    const password = document.getElementById("adminPassword").value;
+    const errorBox = document.getElementById("loginError");
+    errorBox.style.display = "none";
+    try {
+      const credential = await window.surveyAuth.signInWithEmailAndPassword(email, password);
+      currentUser = credential.user;
+      loginBox.style.display = "none";
+      dashboard.style.display = "block";
+      renderRecords();
+    } catch (err) {
+      console.error("Firebase admin sign-in:", err);
+      errorBox.textContent = "Sign-in failed. Check the email, password, Firebase Authentication settings, and authorized domain.";
+      errorBox.style.display = "block";
+    }
+  }
+  document.getElementById("loginBtn").addEventListener("click", login);
+  document.getElementById("adminPassword").addEventListener("keydown", e => { if (e.key === "Enter") login(); });
+  document.getElementById("logoutBtn").addEventListener("click", async () => {
+    try { await window.surveyAuth.signOut(); } catch (e) { console.error(e); }
+    currentUser = null;
+    dashboard.style.display = "none";
+    loginBox.style.display = "block";
+    document.getElementById("adminEmail").value = "";
+    document.getElementById("adminPassword").value = "";
+  });
+  document.getElementById("refreshBtn").addEventListener("click", renderRecords);
+  document.getElementById("searchRecords").addEventListener("input", renderRecords);
+
+  function dateText(iso) {
+    const d = new Date(iso);
+    return Number.isNaN(d.getTime()) ? "Unknown date" : d.toLocaleString();
+  }
+  function renderRecords() {
+    currentRecords = readRecords().sort((a,b) => new Date(b.submittedAt) - new Date(a.submittedAt));
+    const today = new Date().toDateString();
+    document.getElementById("totalCount").textContent = currentRecords.length;
+    document.getElementById("todayCount").textContent = currentRecords.filter(r => new Date(r.submittedAt).toDateString() === today).length;
+    document.getElementById("latestDate").textContent = currentRecords.length ? new Date(currentRecords[0].submittedAt).toLocaleDateString() : "—";
+    const term = document.getElementById("searchRecords").value.trim().toLowerCase();
+    const filtered = currentRecords.filter(r => {
+      const text = [dateText(r.submittedAt), ...Object.values(r.answers || {})].join(" ").toLowerCase();
+      return text.includes(term);
+    });
+    const tbody = document.getElementById("recordsBody");
+    tbody.innerHTML = "";
+    document.getElementById("emptyRecords").style.display = filtered.length ? "none" : "block";
+    filtered.forEach((r, index) => {
+      const tr = document.createElement("tr");
+      const a = r.answers || {};
+      tr.innerHTML = `<td>${index + 1}</td><td>${escapeHTML(dateText(r.submittedAt))}</td><td>${escapeHTML(a.q1 || "—")}</td><td>${escapeHTML(a.q2 || "—")}</td><td>${escapeHTML(a.q6 || "—")}</td><td><div class="table-actions"><button class="btn btn-primary btn-small" data-view="${escapeHTML(r.id)}" type="button">Read</button><button class="btn btn-danger btn-small" data-delete="${escapeHTML(r.id)}" type="button">Delete</button></div></td>`;
+      tbody.appendChild(tr);
+    });
+    tbody.querySelectorAll("[data-view]").forEach(btn => btn.addEventListener("click", () => showDetails(btn.dataset.view)));
+    tbody.querySelectorAll("[data-delete]").forEach(btn => btn.addEventListener("click", () => deleteRecord(btn.dataset.delete)));
+  }
+  function showDetails(id) {
+    const record = readRecords().find(r => r.id === id);
+    if (!record) return;
+    document.getElementById("detailTitle").textContent = `Response submitted ${dateText(record.submittedAt)}`;
+    const container = document.getElementById("detailContent");
+    container.innerHTML = "";
+    for (let i = 1; i <= 17; i++) {
+      const key = `q${i}`;
+      const item = document.createElement("div");
+      item.className = "detail-item";
+      const label = document.createElement("small");
+      label.textContent = `${i}. ${questionLabels[key]}`;
+      const answer = document.createElement("strong");
+      answer.textContent = (record.answers && record.answers[key]) || "No answer";
+      item.append(label, answer);
+      container.appendChild(item);
+    }
+    document.getElementById("detailOverlay").classList.add("show");
+  }
+  function closeDetail() { document.getElementById("detailOverlay").classList.remove("show"); }
+  document.getElementById("closeDetailBtn").addEventListener("click", closeDetail);
+  document.getElementById("detailOverlay").addEventListener("click", e => { if (e.target.id === "detailOverlay") closeDetail(); });
+  async function deleteRecord(id) {
+    if (!currentUser) { alert("Please sign in as an administrator first."); return; }
+    if (!confirm("Delete this survey response permanently from the shared database?")) return;
+    try { await responsesRef.child(id).remove(); }
+    catch (err) { console.error(err); alert("Delete failed. Check Firebase database rules."); }
+  }
+  document.getElementById("clearAllBtn").addEventListener("click", async () => {
+    if (!currentUser) { alert("Please sign in as an administrator first."); return; }
+    if (!confirm("Delete ALL survey responses from the shared database? This cannot be undone.")) return;
+    try { await responsesRef.remove(); }
+    catch (err) { console.error(err); alert("Delete failed. Check Firebase database rules."); }
+  });
+  function csvCell(value) { return `"${String(value ?? "").replace(/"/g, '""')}"`; }
+  document.getElementById("exportBtn").addEventListener("click", () => {
+    const records = readRecords().sort((a,b) => new Date(a.submittedAt) - new Date(b.submittedAt));
+    if (!records.length) { alert("There are no responses to export yet."); return; }
+    const headers = ["Response ID", "Submitted at", ...Object.keys(questionLabels).map(k => questionLabels[k])];
+    const rows = records.map(r => [r.id, dateText(r.submittedAt), ...Object.keys(questionLabels).map(k => (r.answers || {})[k] || "")]);
+    const csv = "\uFEFF" + [headers, ...rows].map(row => row.map(csvCell).join(",")).join("\r\n");
+    const blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = `digital-technology-survey-${new Date().toISOString().slice(0,10)}.csv`;
+    document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+  });
+
+  const findingStorageKey = "digitalTechnologySurveyWrittenFindings_v1";
+  const chartPalette = ["#4f46e5","#0891b2","#0f9f6e","#f59e0b","#db2777","#7c3aed","#64748b","#ea580c"];
+  const chartQuestionTitles = {q2:"Most-used digital device",q6:"Main purpose of Internet use",q4:"Daily Internet usage",q12:"AI tool usage"};
+  function getCounts(records, qKey) {
+    const counts = new Map();
+    records.forEach(r => {
+      const answer = (r.answers || {})[qKey];
+      if (answer) counts.set(answer, (counts.get(answer) || 0) + 1);
+    });
+    return [...counts.entries()].map(([label, count]) => ({label, count}))
+      .sort((a,b) => b.count - a.count || a.label.localeCompare(b.label));
+  }
+  function percent(count, total) { return total ? (count / total * 100) : 0; }
+  function renderAnalysisTable() {
+    const records = readRecords();
+    const key = document.getElementById("analysisQuestion").value;
+    const counts = getCounts(records, key);
+    const total = counts.reduce((sum, item) => sum + item.count, 0);
+    document.getElementById("analysisTotal").textContent = total;
+    document.getElementById("analysisHighest").textContent = counts.length ? Math.max(...counts.map(x=>x.count)) : "—";
+    document.getElementById("analysisLowest").textContent = counts.length ? Math.min(...counts.map(x=>x.count)) : "—";
+    document.getElementById("analysisTop").textContent = counts.length ? `${counts[0].label} (${percent(counts[0].count,total).toFixed(1)}%)` : "—";
+    const tbody = document.getElementById("analysisTableBody");
+    tbody.innerHTML = "";
+    document.getElementById("analysisEmpty").style.display = counts.length ? "none" : "block";
+    counts.forEach(item => {
+      const tr = document.createElement("tr");
+      const pct = percent(item.count,total);
+      tr.innerHTML = `<td>${escapeHTML(item.label)}</td><td>${item.count}</td><td>${pct.toFixed(1)}%</td><td><div class="mini-bar"><span style="width:${pct}%"></span></div></td>`;
+      tbody.appendChild(tr);
+    });
+  }
+  function setupCanvas(canvas) {
+    const rect = canvas.getBoundingClientRect();
+    const ratio = window.devicePixelRatio || 1;
+    canvas.width = Math.max(1, Math.floor(rect.width * ratio));
+    canvas.height = Math.max(1, Math.floor(260 * ratio));
+    const ctx = canvas.getContext("2d");
+    ctx.setTransform(ratio,0,0,ratio,0,0);
+    ctx.clearRect(0,0,rect.width,260);
+    return {ctx,w:rect.width,h:260};
+  }
+  function drawEmpty(ctx,w,h) {
+    ctx.fillStyle = "#667085"; ctx.font = "13px system-ui"; ctx.textAlign = "center";
+    ctx.fillText("No responses available yet",w/2,h/2);
+  }
+  function drawPie(canvas, qKey) {
+    const {ctx,w,h} = setupCanvas(canvas);
+    const counts = getCounts(readRecords(),qKey);
+    const total = counts.reduce((s,x)=>s+x.count,0);
+    if (!total) return drawEmpty(ctx,w,h);
+    const cx = w/2, cy = 115, radius = Math.min(78,w*.27);
+    let start = -Math.PI/2;
+    counts.forEach((item,i) => {
+      const end = start + item.count/total * Math.PI*2;
+      ctx.beginPath(); ctx.moveTo(cx,cy); ctx.arc(cx,cy,radius,start,end); ctx.closePath();
+      ctx.fillStyle = chartPalette[i%chartPalette.length]; ctx.fill();
+      ctx.strokeStyle = "#fff"; ctx.lineWidth = 2; ctx.stroke();
+      start = end;
+    });
+    const legendY = 211, colW = Math.max(120,(w-20)/2);
+    ctx.font = "11px system-ui"; ctx.textAlign = "left";
+    counts.slice(0,8).forEach((item,i) => {
+      const col = i%2, row = Math.floor(i/2), x = 8 + col*colW, y = legendY + row*16;
+      ctx.fillStyle = chartPalette[i%chartPalette.length]; ctx.fillRect(x,y-8,9,9);
+      ctx.fillStyle = "#344054";
+      let label = `${item.label} (${percent(item.count,total).toFixed(0)}%)`;
+      const maxChars = Math.max(10,Math.floor((colW-22)/6.2));
+      if (label.length>maxChars) label=label.slice(0,maxChars-1)+"…";
+      ctx.fillText(label,x+14,y);
+    });
+  }
+  function drawBars(canvas,qKey,mode) {
+    const {ctx,w,h} = setupCanvas(canvas);
+    const counts = getCounts(readRecords(),qKey);
+    const total = counts.reduce((s,x)=>s+x.count,0);
+    if (!total) return drawEmpty(ctx,w,h);
+    const shown = counts.slice(0,8), left = mode==="horizontal"?100:34, right=14, top=18, bottom=54;
+    const plotW = Math.max(20,w-left-right), plotH = h-top-bottom;
+    const max = Math.max(1,...shown.map(x=>x.count));
+    ctx.font = "11px system-ui"; ctx.fillStyle="#667085"; ctx.strokeStyle="#e5e7eb"; ctx.lineWidth=1;
+    for(let i=0;i<=4;i++){
+      const value=max*i/4, y=top+plotH-(plotH*i/4);
+      ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(w-right,y);ctx.stroke();
+      ctx.textAlign="right";ctx.fillText(String(Math.round(value)),left-7,y+4);
+    }
+    if(mode==="horizontal"){
+      const rowH=plotH/shown.length;
+      shown.forEach((item,i)=>{
+        const y=top+i*rowH+rowH*.2, barH=Math.min(22,rowH*.58), barW=plotW*item.count/max;
+        ctx.fillStyle=chartPalette[i%chartPalette.length];ctx.fillRect(left,y,barW,barH);
+        ctx.fillStyle="#344054";ctx.textAlign="right";
+        let label=item.label.length>15?item.label.slice(0,14)+"…":item.label;
+        ctx.fillText(label,left-8,y+barH*.75);
+        ctx.textAlign="left";ctx.fillText(`${item.count} (${percent(item.count,total).toFixed(0)}%)`,Math.min(left+barW+4,w-50),y+barH*.75);
+      });
+    } else {
+      const slot=plotW/shown.length, barW=Math.min(42,slot*.62);
+      shown.forEach((item,i)=>{
+        const bh=plotH*item.count/max, x=left+i*slot+(slot-barW)/2, y=top+plotH-bh;
+        ctx.fillStyle=chartPalette[i%chartPalette.length];ctx.fillRect(x,y,barW,bh);
+        ctx.fillStyle="#344054";ctx.textAlign="center";ctx.fillText(String(item.count),x+barW/2,y-5);
+        ctx.save();ctx.translate(x+barW/2,top+plotH+9);ctx.rotate(-Math.PI/4);
+        let label=item.label.length>19?item.label.slice(0,18)+"…":item.label;
+        ctx.textAlign="right";ctx.fillText(label,0,0);ctx.restore();
+      });
+    }
+  }
+  function renderCharts() {
+    drawPie(document.getElementById("deviceChart"),"q2");
+    drawBars(document.getElementById("purposeChart"),"q6","horizontal");
+    drawBars(document.getElementById("internetChart"),"q4","column");
+    drawPie(document.getElementById("aiChart"),"q12");
+  }
+  function renderGeneratedFindings() {
+    const records=readRecords();
+    const list=document.getElementById("generatedFindings");
+    list.innerHTML="";
+    if(!records.length){list.innerHTML="<li>Submit survey responses to generate findings from your actual data.</li>";return;}
+    const total=records.length;
+    const defs=[
+      ["q2","Most respondents use","as their most frequently used digital device."],
+      ["q6","The most common main purpose for Internet use is","."],
+      ["q4","The most frequently reported daily Internet-use range is","."],
+      ["q12","The most common AI-tool usage response is","."],
+      ["q8","The most frequently used digital learning resource is","."],
+      ["q14","The most common view about digital technology helping with studies is","."],
+      ["q17","The most common confidence level for protecting against online threats is","."]
+    ];
+    defs.forEach(([key,prefix,suffix])=>{
+      const counts=getCounts(records,key);
+      if(!counts.length)return;
+      const top=counts[0], pct=percent(top.count,total);
+      const li=document.createElement("li");
+      li.textContent=`${prefix} ${top.label}${suffix} This response was selected by ${top.count} of ${total} respondents (${pct.toFixed(1)}% of all respondents).`;
+      list.appendChild(li);
+    });
+    const q16=getCounts(records,"q16");
+    if(q16.length){
+      const affected=(records.filter(r=>["Frequently","Sometimes"].includes((r.answers||{}).q16))).length;
+      const li=document.createElement("li");
+      li.textContent=`${affected} of ${total} respondents (${percent(affected,total).toFixed(1)}%) answered “Frequently” or “Sometimes” when asked whether excessive screen time affects sleep or concentration.`;
+      list.appendChild(li);
+    }
+    const q3=getCounts(records,"q3");
+    if(q3.length){
+      const longer=records.filter(r=>["4–6 hours","More than 6 hours"].includes((r.answers||{}).q3)).length;
+      const li=document.createElement("li");
+      li.textContent=`${longer} of ${total} respondents (${percent(longer,total).toFixed(1)}%) reported using digital devices for 4 or more hours per day.`;
+      list.appendChild(li);
+    }
+    if(!list.children.length)list.innerHTML="<li>Not enough answered data to generate findings yet.</li>";
+  }
+  function loadWrittenFindings() {
+    let saved=[];
+    try { saved=JSON.parse(localStorage.getItem(findingStorageKey)||"[]"); } catch(e) {}
+    const editor=document.getElementById("customFindingsEditor");
+    editor.innerHTML="";
+    for(let i=0;i<7;i++){
+      const label=document.createElement("label");
+      label.style.display="block";label.style.marginBottom="10px";label.style.fontWeight="650";
+      label.textContent=`Finding ${i+1}`;
+      const input=document.createElement("input");
+      input.type="text";input.maxLength=500;input.placeholder=`Write finding ${i+1} based on your results…`;
+      input.value=Array.isArray(saved)?(saved[i]||""):"";
+      input.dataset.finding=String(i);
+      label.appendChild(input);editor.appendChild(label);
+    }
+  }
+  document.getElementById("refreshAnalysisBtn").addEventListener("click",()=>{renderAnalysisTable();renderCharts();renderGeneratedFindings();});
+  document.getElementById("analysisQuestion").addEventListener("change",renderAnalysisTable);
+  document.getElementById("saveFindingsBtn").addEventListener("click",()=>{
+    const values=[...document.querySelectorAll("[data-finding]")].map(input=>input.value.trim());
+    localStorage.setItem(findingStorageKey,JSON.stringify(values));
+    const n=document.getElementById("findingsNotice");
+    n.className="notice success";n.textContent="Your written findings have been saved in this browser.";
+  });
+  document.getElementById("exportFindingsBtn").addEventListener("click",()=>{
+    const generated=[...document.querySelectorAll("#generatedFindings li")].map((li,i)=>`${i+1}. ${li.textContent}`);
+    let custom=[];try{custom=JSON.parse(localStorage.getItem(findingStorageKey)||"[]")}catch(e){}
+    const textOut="DATA ANALYSIS — DIGITAL TECHNOLOGY USAGE SURVEY\n\nTotal respondents: "+readRecords().length+"\n\nGENERATED FINDINGS\n"+generated.join("\n")+"\n\nSTUDENT-WRITTEN FINDINGS\n"+(Array.isArray(custom)?custom.filter(Boolean).map((s,i)=>`${i+1}. ${s}`).join("\n"):"");
+    const blob=new Blob([textOut],{type:"text/plain;charset=utf-8"});
+    const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="survey-findings.txt";a.click();URL.revokeObjectURL(url);
+  });
+  document.getElementById("downloadAnalysisBtn").addEventListener("click",()=>{
+    const key=document.getElementById("analysisQuestion").value;
+    const counts=getCounts(readRecords(),key), total=counts.reduce((s,x)=>s+x.count,0);
+    const title=questionLabels[key]||key;
+    const rows=[["Question",title],["Total respondents",total],["Answer","Frequency","Percentage"],...counts.map(x=>[x.label,x.count,percent(x.count,total).toFixed(1)+"%"])];
+    const csv="\uFEFF"+rows.map(row=>row.map(v=>`"${String(v??"").replace(/"/g,'""')}"`).join(",")).join("\r\n");
+    const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"});const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");a.href=url;a.download="survey-data-analysis.csv";a.click();URL.revokeObjectURL(url);
+  });
+  const originalRenderRecords = renderRecords;
+  renderRecords = function() {
+    originalRenderRecords();
+    renderAnalysisTable();
+    renderCharts();
+    renderGeneratedFindings();
+  };
+  window.addEventListener("resize",()=>{if(dashboard.style.display==="block")renderCharts();});
+  loadWrittenFindings();
+  updateProgress();
+  renderAnalysisTable();
+  renderCharts();
+  renderGeneratedFindings();
+})();
+</script>
+</body>
+</html>
