@@ -275,9 +275,7 @@ footer{text-align:center;padding:24px 16px;color:var(--muted);font-size:.87rem}
     firebaseReady = true;
     if (dashboard.style.display === "block") renderRecords();
   }, error => {
-    console.error("Firebase response listener:", error);
-    notice.className = "notice error";
-    notice.textContent = "";
+    
   });
   function readRecords() { return Array.isArray(currentRecords) ? currentRecords : []; }
   async function writeRecords(records) {
